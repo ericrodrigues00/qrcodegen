@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {QrReader}from 'react-qr-reader';
+import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -24,7 +24,7 @@ const ScannerContainer = styled.div`
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 `;
 
-const QRScanner = styled(QrReader)`
+const QRScanner = styled(QrScanner)`
   max-width: 100%;
 `;
 
@@ -43,25 +43,6 @@ const EscanearIngresso = () => {
   const [resultadoScan, setResultadoScan] = useState(null);
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const handleScan = async (data) => {
-    if (data) {
-      // Simule uma lista de ingressos válidos
-      const ingressosValidos = [/* Lista de ingressos válidos */];
-
-      if (ingressosValidos.includes(data)) {
-        // Ingresso válido - atualize o estado para exibir o popup
-        setResultadoScan('Ingresso Válido');
-        setPopupVisible(true);
-
-        // Aqui você pode implementar a lógica para marcar o ingresso como utilizado na base de dados
-      } else {
-        // Ingresso inválido - atualize o estado para exibir o popup
-        setResultadoScan('Ingresso Inválido');
-        setPopupVisible(true);
-      }
-    }
-  };
-
   const handleError = (error) => {
     console.error('Erro ao escanear o QR Code:', error);
   };
@@ -76,9 +57,25 @@ const EscanearIngresso = () => {
       <Title>Escanear Ingresso</Title>
       <ScannerContainer>
         <QRScanner
-          delay={300} // Ajuste o atraso de leitura, se necessário
           onError={handleError}
-          onScan={handleScan}
+          onScan={(result) => {
+            if (result) {
+              // Simule uma lista de ingressos válidos
+              const ingressosValidos = [/* Lista de ingressos válidos */];
+
+              if (ingressosValidos.includes(result)) {
+                // Ingresso válido - atualize o estado para exibir o popup
+                setResultadoScan('Ingresso Válido');
+                setPopupVisible(true);
+
+                // Aqui você pode implementar a lógica para marcar o ingresso como utilizado na base de dados
+              } else {
+                // Ingresso inválido - atualize o estado para exibir o popup
+                setResultadoScan('Ingresso Inválido');
+                setPopupVisible(true);
+              }
+            }
+          }}
         />
         {resultadoScan && <Popup onClick={fecharPopup}>{resultadoScan}</Popup>}
       </ScannerContainer>
