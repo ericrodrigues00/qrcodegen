@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
 
@@ -39,20 +39,16 @@ const Popup = styled.div`
   z-index: 1;
 `;
 
-const ToggleButton = styled.button`
-  background-color: #6a1b9a;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
+const CameraSelection = styled.select`
   margin-top: 10px;
-  cursor: pointer;
+  padding: 5px;
 `;
 
 const EscanearIngresso = () => {
   const [resultadoScan, setResultadoScan] = useState(null);
   const [popupVisible, setPopupVisible] = useState(false);
-  const [facingMode, setFacingMode] = useState('environment'); // Começa com a câmera traseira
+  const [selectedCamera, setSelectedCamera] = useState('environment');
+  const scannerRef = useRef(null);
 
   const handleError = (error) => {
     console.error('Erro ao escanear o QR Code:', error);
@@ -63,19 +59,30 @@ const EscanearIngresso = () => {
     setPopupVisible(false);
   };
 
-  const toggleCamera = () => {
-    setFacingMode((prevFacingMode) =>
-      prevFacingMode === 'environment' ? 'user' : 'environment'
-    );
+  const handleCameraChange = (event) => {
+    setSelectedCamera(event.target.value);
+    // Parar e reiniciar o scanner para trocar de câmera
+    if (scannerRef.current) {
+      scannerRef.current.stop();
+      scannerRef.current.start();
+    }
   };
 
   return (
     <Container>
       <Title>Escanear Ingresso</Title>
       <ScannerContainer>
+        <CameraSelection
+          value={selectedCamera}
+          onChange={handleCameraChange}
+        >
+          <option value="environment">Traseira</option>
+          <option value="user">Frontal</option>
+        </CameraSelection>
         <QRScanner
+          ref={scannerRef}
           onError={handleError}
-          facingMode={facingMode}
+          facingMode={selectedCamera}
           onScan={(result) => {
             if (result) {
               // Simule uma lista de ingressos válidos
@@ -96,9 +103,6 @@ const EscanearIngresso = () => {
           }}
         />
         {resultadoScan && <Popup onClick={fecharPopup}>{resultadoScan}</Popup>}
-        <ToggleButton onClick={toggleCamera}>
-          Alternar Câmera ({facingMode === 'environment' ? 'Frontal' : 'Traseira'})
-        </ToggleButton>
       </ScannerContainer>
     </Container>
   );
