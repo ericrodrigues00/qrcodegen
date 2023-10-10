@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
+import axios from 'axios'; // Importe o axios para fazer a solicitação à sua API.
 
 const Container = styled.div`
   text-align: center;
@@ -52,6 +53,22 @@ const EscanearIngresso = () => {
     setPopupVisible(false);
   };
 
+  const verificarIngresso = async (valor) => {
+    try {
+      const response = await axios.get(`/api/verificarIngresso?valor=${valor}`);
+
+      if (response.data.ingressoValido) {
+        setResultadoScan('Ingresso Válido');
+        setPopupVisible(true);
+      } else {
+        setResultadoScan('Ingresso Inválido');
+        setPopupVisible(true);
+      }
+    } catch (error) {
+      console.error('Erro ao verificar o ingresso:', error);
+    }
+  };
+
   return (
     <Container>
       <Title>Escanear Ingresso</Title>
@@ -59,25 +76,11 @@ const EscanearIngresso = () => {
         <QRScanner
           onError={handleError}
           constraints={{
-            audio: true,
-            video: { facingMode: "environment" }
+            video: { facingMode: 'environment' }, // Use a câmera traseira
           }}
           onScan={(result) => {
             if (result) {
-              // Simule uma lista de ingressos válidos
-              const ingressosValidos = [/* Lista de ingressos válidos */];
-
-              if (ingressosValidos.includes(result)) {
-                // Ingresso válido - atualize o estado para exibir o popup
-                setResultadoScan('Ingresso Válido');
-                setPopupVisible(true);
-
-                // Aqui você pode implementar a lógica para marcar o ingresso como utilizado na base de dados
-              } else {
-                // Ingresso inválido - atualize o estado para exibir o popup
-                setResultadoScan('Ingresso Inválido');
-                setPopupVisible(true);
-              }
+              verificarIngresso(result); // Verifique o ingresso lido
             }
           }}
         />
