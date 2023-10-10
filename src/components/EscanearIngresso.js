@@ -50,10 +50,7 @@ const EscanearIngresso = () => {
             video: { facingMode: 'environment' },
           }}
           onScan={(result) => {
-            if (result) {
-              // Define o valor lido no estado
-              setValorLido(result);
-            }
+            alert(result)
           }}
         />
         {valorLido && (
