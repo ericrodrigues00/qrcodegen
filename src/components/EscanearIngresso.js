@@ -28,26 +28,16 @@ const QRScanner = styled(QrScanner)`
   max-width: 100%;
 `;
 
-const Popup = styled.div`
-  background-color: #6a1b9a;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 1;
+const ValorLido = styled.p`
+  font-size: 18px;
+  margin-top: 20px;
 `;
 
 const EscanearIngresso = () => {
-  const [valoresLidos, setValoresLidos] = useState([]);
+  const [valorLido, setValorLido] = useState(null);
 
   const handleError = (error) => {
     console.error('Erro ao escanear o QR Code:', error);
-  };
-
-  const fecharPopup = () => {
-    setValoresLidos([]);
   };
 
   return (
@@ -57,24 +47,19 @@ const EscanearIngresso = () => {
         <QRScanner
           onError={handleError}
           constraints={{
-            video: { facingMode: "environment" }
+            video: { facingMode: 'environment' },
           }}
           onScan={(result) => {
             if (result) {
-              // Adiciona o valor lido ao estado
-              setValoresLidos([...valoresLidos, result]);
+              // Define o valor lido no estado
+              setValorLido(result);
             }
           }}
         />
-        {valoresLidos.length > 0 && (
-          <Popup onClick={fecharPopup}>
-            <strong>Valores Lidos:</strong>
-            <ul>
-              {valoresLidos.map((valor, index) => (
-                <li key={index}>{valor}</li>
-              ))}
-            </ul>
-          </Popup>
+        {valorLido && (
+          <ValorLido>
+            Valor Lido: <strong>{valorLido}</strong>
+          </ValorLido>
         )}
       </ScannerContainer>
     </Container>
