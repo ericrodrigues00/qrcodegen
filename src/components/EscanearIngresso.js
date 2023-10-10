@@ -1,85 +1,53 @@
-import React, { useState } from 'react';
-import QrScanner from 'react-qr-scanner';
-import styled from 'styled-components';
-
-const Container = styled.div`
-  text-align: center;
-  padding: 20px;
-  background-color: #f2f2f2;
-  min-height: 100vh;
-`;
-
-const Title = styled.h1`
-  color: #6a1b9a;
-  margin-bottom: 20px;
-`;
-
-const ScannerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-`;
-
-const QRScanner = styled(QrScanner)`
-  max-width: 100%;
-`;
-
-const Popup = styled.div`
-  background-color: #6a1b9a;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 1;
-`;
+import React, { useState, useEffect } from 'react';
+import QrReader from 'react-qr-scanner';
+import api from '../api';
 
 const EscanearIngresso = () => {
   const [resultadoScan, setResultadoScan] = useState(null);
-  const [popupVisible, setPopupVisible] = useState(false);
+  const [ingressoValido, setIngressoValido] = useState(null);
 
-  const handleError = (error) => {
-    console.error('Erro ao escanear o QR Code:', error);
-  };
+  useEffect(() => {
+    if (resultadoScan) {
+      api
+        .post('/api/verificar-ingresso', { qrCode: resultadoScan })
+        .then((response) => {
+          if (response.data.ingressoValido) {
+            marcarIngressoComoUtilizado(response.data.numeroIngresso);
+            setIngressoValido(true);
+          } else {
+            setIngressoValido(false);
+          }
+        })
+        .catch((error) => {
+          console.error('Erro ao verificar o ingresso:', error);
+          setIngressoValido(false);
+        });
+    }
+  }, [resultadoScan]);
 
-  const fecharPopup = () => {
-    setResultadoScan(null);
-    setPopupVisible(false);
+  const marcarIngressoComoUtilizado = (numeroIngresso) => {
+    api
+      .put(`/api/marcar-utilizado/${numeroIngresso}`)
+      .then(() => {
+        console.log('Ingresso marcado como utilizado com sucesso.');
+      })
+      .catch((error) => {
+        console.error('Erro ao marcar o ingresso como utilizado:', error);
+      });
   };
 
   return (
-    <Container>
-      <Title>Escanear Ingresso</Title>
-      <ScannerContainer>
-        <QRScanner
-          onError={handleError}
-          onScan={(result) => {
-            if (result) {
-              // Simule uma lista de ingressos válidos
-              const ingressosValidos = [/* Lista de ingressos válidos */];
-
-              if (ingressosValidos.includes(result)) {
-                // Ingresso válido - atualize o estado para exibir o popup
-                setResultadoScan('Ingresso Válido');
-                setPopupVisible(true);
-
-                // Aqui você pode implementar a lógica para marcar o ingresso como utilizado na base de dados
-              } else {
-                // Ingresso inválido - atualize o estado para exibir o popup
-                setResultadoScan('Ingresso Inválido');
-                setPopupVisible(true);
-              }
-            }
-          }}
-        />
-        {resultadoScan && <Popup onClick={fecharPopup}>{resultadoScan}</Popup>}
-      </ScannerContainer>
-    </Container>
+    <div>
+      <h1>Escanear Ingresso</h1>
+      <QrReader
+        delay={300}
+        onError={(error) => console.error('Erro ao escanear:', error)}
+        onScan={(result) => setResultadoScan(result)}
+        facingMode="environment"
+      />
+      {ingressoValido === true && <div>INGRESSO VÁLIDO</div>}
+      {ingressoValido === false && <div>INGRESSO INVÁLIDO</div>}
+    </div>
   );
 };
 
