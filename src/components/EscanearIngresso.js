@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
+import axios from 'axios'; // Importe o axios para fazer a solicitação à sua API.
 
 const Container = styled.div`
   text-align: center;
@@ -28,16 +29,44 @@ const QRScanner = styled(QrScanner)`
   max-width: 100%;
 `;
 
-const ValorLido = styled.p`
-  font-size: 18px;
-  margin-top: 20px;
+const Popup = styled.div`
+  background-color: #6a1b9a;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
 `;
 
 const EscanearIngresso = () => {
-  const [valorLido, setValorLido] = useState(null);
+  const [resultadoScan, setResultadoScan] = useState(null);
+  const [popupVisible, setPopupVisible] = useState(false);
 
   const handleError = (error) => {
     console.error('Erro ao escanear o QR Code:', error);
+  };
+
+  const fecharPopup = () => {
+    setResultadoScan(null);
+    setPopupVisible(false);
+  };
+
+  const verificarIngresso = async (valor) => {
+    try {
+      const response = await axios.get(`/api/verificarIngresso?valor=${valor}`);
+
+      if (response.data.ingressoValido) {
+        setResultadoScan('Ingresso Válido');
+        setPopupVisible(true);
+      } else {
+        setResultadoScan('Ingresso Inválido');
+        setPopupVisible(true);
+      }
+    } catch (error) {
+      console.error('Erro ao verificar o ingresso:', error);
+    }
   };
 
   return (
@@ -47,17 +76,15 @@ const EscanearIngresso = () => {
         <QRScanner
           onError={handleError}
           constraints={{
-            video: { facingMode: 'environment' },
+            video: { facingMode: 'environment' }, // Use a câmera traseira
           }}
           onScan={(result) => {
-            alert(result)
+            if (result) {
+              verificarIngresso(result); // Verifique o ingresso lido
+            }
           }}
         />
-        {valorLido && (
-          <ValorLido>
-            Valor Lido: <strong>{valorLido}</strong>
-          </ValorLido>
-        )}
+        {resultadoScan && <Popup onClick={fecharPopup}>{resultadoScan}</Popup>}
       </ScannerContainer>
     </Container>
   );
