@@ -39,9 +39,20 @@ const Popup = styled.div`
   z-index: 1;
 `;
 
+const ToggleButton = styled.button`
+  background-color: #6a1b9a;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+`;
+
 const EscanearIngresso = () => {
   const [resultadoScan, setResultadoScan] = useState(null);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [facingMode, setFacingMode] = useState('environment'); // Começa com a câmera traseira
 
   const handleError = (error) => {
     console.error('Erro ao escanear o QR Code:', error);
@@ -52,13 +63,19 @@ const EscanearIngresso = () => {
     setPopupVisible(false);
   };
 
+  const toggleCamera = () => {
+    setFacingMode((prevFacingMode) =>
+      prevFacingMode === 'environment' ? 'user' : 'environment'
+    );
+  };
+
   return (
     <Container>
       <Title>Escanear Ingresso</Title>
       <ScannerContainer>
         <QRScanner
           onError={handleError}
-          facingMode="environment" // Define a câmera traseira
+          facingMode={facingMode}
           onScan={(result) => {
             if (result) {
               // Simule uma lista de ingressos válidos
@@ -79,6 +96,9 @@ const EscanearIngresso = () => {
           }}
         />
         {resultadoScan && <Popup onClick={fecharPopup}>{resultadoScan}</Popup>}
+        <ToggleButton onClick={toggleCamera}>
+          Alternar Câmera ({facingMode === 'environment' ? 'Frontal' : 'Traseira'})
+        </ToggleButton>
       </ScannerContainer>
     </Container>
   );
