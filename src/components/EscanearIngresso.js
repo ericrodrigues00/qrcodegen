@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
-import axios from 'axios'; // Importe o axios para fazer a solicitação à sua API.
 
 const Container = styled.div`
   text-align: center;
@@ -53,22 +52,6 @@ const EscanearIngresso = () => {
     setPopupVisible(false);
   };
 
-  const verificarIngresso = async (valor) => {
-    try {
-      const response = await axios.get(`/api/verificarIngresso?valor=${valor}`);
-
-      if (response.data.ingressoValido) {
-        setResultadoScan('Ingresso Válido');
-        setPopupVisible(true);
-      } else {
-        setResultadoScan('Ingresso Inválido');
-        setPopupVisible(true);
-      }
-    } catch (error) {
-      console.error('Erro ao verificar o ingresso:', error);
-    }
-  };
-
   return (
     <Container>
       <Title>Escanear Ingresso</Title>
@@ -76,11 +59,14 @@ const EscanearIngresso = () => {
         <QRScanner
           onError={handleError}
           constraints={{
-            video: { facingMode: 'environment' }, // Use a câmera traseira
+            video: { facingMode: "environment" }
           }}
           onScan={(result) => {
             if (result) {
-              verificarIngresso(result); // Verifique o ingresso lido
+              // Exibe o valor lido como um alerta
+              alert(`Valor lido pelo scanner: ${result}`);
+
+              // Restante do código
             }
           }}
         />
