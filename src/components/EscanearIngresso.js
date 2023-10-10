@@ -40,16 +40,14 @@ const Popup = styled.div`
 `;
 
 const EscanearIngresso = () => {
-  const [resultadoScan, setResultadoScan] = useState(null);
-  const [popupVisible, setPopupVisible] = useState(false);
+  const [valoresLidos, setValoresLidos] = useState([]);
 
   const handleError = (error) => {
     console.error('Erro ao escanear o QR Code:', error);
   };
 
   const fecharPopup = () => {
-    setResultadoScan(null);
-    setPopupVisible(false);
+    setValoresLidos([]);
   };
 
   return (
@@ -63,14 +61,21 @@ const EscanearIngresso = () => {
           }}
           onScan={(result) => {
             if (result) {
-              // Exibe o valor lido como um alerta
-              alert(`Valor lido pelo scanner: ${result}`);
-
-              // Restante do código
+              // Adiciona o valor lido ao estado
+              setValoresLidos([...valoresLidos, result]);
             }
           }}
         />
-        {resultadoScan && <Popup onClick={fecharPopup}>{resultadoScan}</Popup>}
+        {valoresLidos.length > 0 && (
+          <Popup onClick={fecharPopup}>
+            <strong>Valores Lidos:</strong>
+            <ul>
+              {valoresLidos.map((valor, index) => (
+                <li key={index}>{valor}</li>
+              ))}
+            </ul>
+          </Popup>
+        )}
       </ScannerContainer>
     </Container>
   );
