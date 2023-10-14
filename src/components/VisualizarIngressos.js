@@ -37,7 +37,7 @@ const VisualizarIngressos = () => {
               <td>{ingresso.nome}</td>
               <td>{ingresso.contato}</td>
            
-              <td>{ingresso.utilizado ? 'SIM' : 'NÃO'}</td>
+              <td>{ingresso.lido ? 'SIM' : 'NÃO'}</td>
             </tr>
           ))}
         </tbody>

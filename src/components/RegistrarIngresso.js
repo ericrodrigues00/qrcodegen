@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import QRCode from 'qrcode.react';
-import styled from 'styled-components';
-import api from '../api';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import styled from "styled-components";
+import api from "../api";
+import { Link } from "react-router-dom";
+import jsPDF from "jspdf";
+import QRCode from "qrcode";
 
 const Container = styled.div`
   text-align: center;
@@ -69,57 +70,97 @@ const Popup = styled.div`
 `;
 
 const RegistrarIngresso = () => {
-  const [nome, setNome] = useState('');
-  const [contato, setContato] = useState('');
+  const [nome, setNome] = useState("");
+  const [contato, setContato] = useState("");
+  const [numero, setNumero] = useState("");
+  const [lido, setLido] = useState(false);
   const [ingressos, setIngressos] = useState([]);
-  const [qrCodeData, setQRCodeData] = useState('');
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const gerarQRCode = async () => {
-    if (nome && contato) {
+  // ...
+
+  const gerarPDF = async () => {
+    if (nome && contato) { // Certifique-se de que o número está definido
       const novoIngresso = {
         nome,
         contato,
+        numero, // Use o número extraído do código QR
+        lido
       };
 
       try {
         // Faça a solicitação POST para o backend para registrar o ingresso
-        const response = await api.post('/api/ingressos', novoIngresso);
+        const response = await api.post("/api/ingressos", novoIngresso);
+
+        // Crie um novo documento PDF
+        const fileName = "Ingresso - " + {nome} + " .pdf";
+        const doc = new jsPDF();
+
+        // Configurações para centralizar conteúdo
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const contentWidth = 200; // Largura do conteúdo central
+        const contentX = (pageWidth - contentWidth) / 2;
+
+        // Defina estilos de fonte, cor de fundo e tamanho de fonte
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18); // Tamanho da fonte aumentado para 18
+        doc.setTextColor(255, 255, 255);
+        doc.setFillColor(106, 27, 154);
+        doc.rect(0, 0, 210, 297, "F");
+        doc.text("Parmejó 2023", pageWidth / 2, 30, null, null, "center");
+        const qrCodeSize = 70;
+        const qrCodeConfiguration = {
+          margin: 0,
+          width: qrCodeSize,
+          height: qrCodeSize,
+        };
+        // Gere o QR Code diretamente no PDF
+        const qrCodeData = `Nome: ${response.data.nome}, Contato: ${response.data.contato}, Numero: ${response.data.numero}`;
 
 
-        // Atualize o estado com os dados retornados pelo backend
-        setIngressos([...ingressos, response.data]);
-        setQRCodeData(JSON.stringify(response.data));
-        setNome('');
-        setContato('');
+        const canvas = document.createElement("canvas");
+
+        QRCode.toCanvas(canvas, qrCodeData, qrCodeConfiguration);
+        const imgData = canvas.toDataURL("image/png");
+
+        // Calcula a posição central para o QR Code
+        const qrCodeX = contentX + (contentWidth - qrCodeSize) / 2;
+        const qrCodeY = 50; // Define a posição vertical
+
+        // Exibir nome e contato no centro
+        const textX = pageWidth / 2; // Centraliza horizontalmente
+        const textY = qrCodeY + qrCodeSize + 10;
+        doc.text(`${response.data.nome}`, textX, textY, null, null, "center");
+        doc.text(
+          `${response.data.contato}`,
+          textX,
+          textY + 10,
+          null,
+          null,
+          "center"
+        );
+
+        // Defina a posição e o tamanho do QR Code
+        doc.addImage(imgData, "PNG", qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
+
+        // Salve o PDF
+        doc.save(fileName);
+
+        // Exiba o popup de confirmação
+        setPopupVisible(true);
+
+        // Limpe os campos de nome e contato
+        setNome("");
+        setContato("");
+        setNumero("");
+        // Aguarde 2 segundos e, em seguida, oculte o popup
+        setTimeout(() => {
+          setPopupVisible(false);
+        }, 2000);
       } catch (error) {
-        console.error('Erro ao registrar ingresso:', error);
+        console.error("Erro ao registrar ingresso:", error);
       }
-    }
-  };
-
-  const salvarQRCode = () => {
-    if (qrCodeData) {
-      // Gere um nome de arquivo exclusivo com base no número do ingresso
-      const fileName = `Ingresso`;
-  
-      // Crie um elemento de âncora temporário para fazer o download
-      const canvas = document.querySelector("canvas");
-      const downloadLink = document.createElement("a");
-      downloadLink.href = canvas.toDataURL("image/png");
-      downloadLink.download = fileName;
-      downloadLink.click();
-  
-      // Exiba o popup de confirmação
-      setPopupVisible(true);
-  
-      // Remova o QR Code da tela
-      setQRCodeData('');
-  
-      // Aguarde 2 segundos e, em seguida, oculte o popup
-      setTimeout(() => {
-        setPopupVisible(false);
-      }, 2000);
     }
   };
 
@@ -128,16 +169,18 @@ const RegistrarIngresso = () => {
       <Title>Registrar Ingresso</Title>
       <FormContainer>
         <InputLabel>Nome:</InputLabel>
-        <Input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
+        <Input
+          type="text"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+        />
         <InputLabel>Contato:</InputLabel>
-        <Input type="text" value={contato} onChange={(e) => setContato(e.target.value)} />
-        <Button onClick={gerarQRCode}>GERAR QR CODE</Button>
-        {qrCodeData && (
-          <QRCodeContainer>
-            <QRCode value={qrCodeData} />
-          </QRCodeContainer>
-        )}
-        <Button onClick={salvarQRCode}>SALVAR QRCODE</Button>
+        <Input
+          type="text"
+          value={contato}
+          onChange={(e) => setContato(e.target.value)}
+        />
+        <Button onClick={gerarPDF}>SALVAR QRCODE</Button>
         <Link to="/">
           <Button>Voltar para a Home</Button>
         </Link>
@@ -147,8 +190,8 @@ const RegistrarIngresso = () => {
       <ul>
         {ingressos.map((ingresso, index) => (
           <li key={index}>
-            <strong>Nome:</strong> {ingresso.nome}, <strong>Contato:</strong> {ingresso.contato},{' '}
-            
+            <strong>Nome:</strong> {ingresso.nome}, <strong>Contato:</strong>{" "}
+            {ingresso.contato},{" "}
           </li>
         ))}
       </ul>

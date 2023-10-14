@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
 import axios from 'axios'; // Importe o axios para fazer a solicitação à sua API.
+import RegistrarIngresso from './RegistrarIngresso';
 
 const Container = styled.div`
   text-align: center;
@@ -43,6 +45,8 @@ const Popup = styled.div`
 const EscanearIngresso = () => {
   const [resultadoScan, setResultadoScan] = useState(null);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [redirect, setRedirect] = useState(null); 
+  const [lido, setLido] = useState(false);
 
   const handleError = (error) => {
     console.error('Erro ao escanear o QR Code:', error);
@@ -53,21 +57,38 @@ const EscanearIngresso = () => {
     setPopupVisible(false);
   };
 
-  const verificarIngresso = async (valor) => {
+  const verificarIngresso = async (result) => {
     try {
-      const response = await axios.get(`/api/verificarIngresso?valor=${valor}`);
-
-      if (response.data.ingressoValido) {
-        setResultadoScan('Ingresso Válido');
-        setPopupVisible(true);
+      const qrCodeData = result.text;
+      console.log('URL lida pela câmera:', qrCodeData);
+      const numeroMatch = qrCodeData.match(/Numero: (\d+)/);
+      if (numeroMatch) {
+        const numero = numeroMatch[1];
+        const apiUrl = `http://localhost:3001/api/verificarIngresso?numero=${numero}`;
+        console.log('URL da API:', apiUrl); // Adicione esta linha para imprimir a URL no console
+        const response = await axios.get(apiUrl);
+        if (response.data.ingressoValido) {
+          setResultadoScan('Ingresso Válido');
+          setPopupVisible(true);
+          setLido(true);
+        } else {
+          if (response.data.message === "Ingresso já foi utilizado"){
+            setResultadoScan("Ingresso já foi utilizado")
+          }
+          else {
+          setResultadoScan('Ingresso Inválido');
+          }
+          setPopupVisible(true);
+      }
       } else {
-        setResultadoScan('Ingresso Inválido');
-        setPopupVisible(true);
+        console.error('Número não encontrado no código QR');
       }
     } catch (error) {
       console.error('Erro ao verificar o ingresso:', error);
     }
   };
+  
+  
 
   return (
     <Container>
@@ -76,11 +97,11 @@ const EscanearIngresso = () => {
         <QRScanner
           onError={handleError}
           constraints={{
-            video: { facingMode: 'environment' }, // Use a câmera traseira
+            video: { facingMode: 'environment' }, 
           }}
           onScan={(result) => {
             if (result) {
-              verificarIngresso(result); // Verifique o ingresso lido
+              verificarIngresso(result); 
             }
           }}
         />

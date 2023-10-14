@@ -5,6 +5,7 @@ const ingressoSchema = new mongoose.Schema({
   nome: String,
   contato: String,
   numero: Number,
+  lido: Boolean
 });
 
 module.exports = mongoose.model('Ingresso', ingressoSchema);

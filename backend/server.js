@@ -15,18 +15,21 @@ app.use(cors()); // Habilita o CORS
 // Rota para verificar a validade do ingresso
 app.get('/api/verificarIngresso', async (req, res) => {
   try {
-    const { valor } = req.query; // Valor lido do QR Code
+    const numero = req.query.numero;
 
-    // Verifique no banco de dados se o ingresso com o valor lido é válido
-    const ingressoValido = await Ingresso.findOne({ valor });
+    const ingresso = await Ingresso.findOne({ numero });
 
-    if (ingressoValido) {
-      // Ingresso válido
-      // Implemente aqui a lógica para marcar o ingresso como utilizado na base de dados, se necessário
-      res.status(200).json({ ingressoValido: true });
-    } else {
-      // Ingresso inválido
-      res.status(200).json({ ingressoValido: false });
+    if (ingresso) {
+      if (ingresso.lido) {
+        res.status(200).json({ingressoValido: false, message:"Ingresso já foi utilizado"})
+      } else {
+      ingresso.lido = true;
+      await ingresso.save();
+      res.json({ ingressoValido: true });
+      }
+    }
+    else {
+      res.status(200).json({ ingressoValido: false, message: "Ingresso não encontrado" });
     }
   } catch (error) {
     console.error('Erro ao verificar o ingresso:', error);
@@ -39,10 +42,10 @@ app.get('/api/verificarIngresso', async (req, res) => {
 // Rota para registrar ingressos
 app.post('/api/ingressos', async (req, res) => {
   try {
-    const { nome, contato } = req.body;
+    const { nome, contato, lido } = req.body;
 
-    // Crie um novo ingresso no banco de dados
-    const novoIngresso = new Ingresso({ nome, contato });
+    const numeroAleatorio = Math.floor(Math.random() * 1000000)
+    const novoIngresso = new Ingresso({ nome, contato, numero: numeroAleatorio, lido });
 
     // Salve o ingresso no banco de dados
     await novoIngresso.save();
