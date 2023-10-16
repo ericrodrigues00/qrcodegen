@@ -170,7 +170,7 @@ const RegistrarIngresso = () => {
 
   return (
     <Container>
-      <Title>Registrar Ingresso</Title>
+      <Title>Registre o Ingresso</Title>
       <FormContainer>
         <InputLabel>Nome:</InputLabel>
         <Input
