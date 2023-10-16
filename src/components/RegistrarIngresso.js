@@ -5,28 +5,39 @@ import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import QRCode from "qrcode";
 
+// conteiner roxo
 const Container = styled.div`
-  text-align: center;
   padding: 20px;
-  background-color: #f2f2f2;
+  background-color: #a391d6;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: 50vh;
+  
 `;
 
 const Title = styled.h1`
-  color: #6a1b9a;
   margin-bottom: 20px;
+  text-transform: uppercase;
 `;
-
+//conteiner branco com as infos
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  font-family: "Roboto"
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+  padding: 60px 50px;
+  max-width: 1000px;
+  width: 50%;
+  height: 50%;
+  margin: 0 auto;
+  justify-content:center;
 `;
+
 
 const InputLabel = styled.label`
   font-weight: bold;
@@ -35,9 +46,12 @@ const InputLabel = styled.label`
 
 const Input = styled.input`
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
+  border: 0;
+  border-radius: 0px;
+  border-bottom: 1px solid #666;
+  width: 45%;
+  font-weight: bold;
+  
 `;
 
 const Button = styled.button`
@@ -45,7 +59,7 @@ const Button = styled.button`
   color: white;
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
@@ -67,7 +81,8 @@ const Popup = styled.div`
   top: 20px;
   right: 20px;
   z-index: 1;
-`;
+`; 
+
 
 const RegistrarIngresso = () => {
   const [nome, setNome] = useState("");
@@ -80,15 +95,11 @@ const RegistrarIngresso = () => {
   // ...
 
   const gerarPDF = async () => {
-    if (nome && contato) { 
-    console.log('Nome:', nome); // Adicione esta linha
-    console.log('Contato:', contato); // Adicione esta linha
-    console.log('Número:', numero); // Adicione esta linha
-    console.log('Lidoe:', lido);
+    if (nome && contato) { // Certifique-se de que o número está definido
       const novoIngresso = {
         nome,
         contato,
-        numero, 
+        numero, // Use o número extraído do código QR
         lido
       };
 
@@ -119,7 +130,7 @@ const RegistrarIngresso = () => {
           width: qrCodeSize,
           height: qrCodeSize,
         };
-
+        // Gere o QR Code diretamente no PDF
         const qrCodeData = `Nome: ${response.data.nome}, Contato: ${response.data.contato}, Numero: ${response.data.numero}`;
 
 
@@ -158,7 +169,7 @@ const RegistrarIngresso = () => {
         setNome("");
         setContato("");
         setNumero("");
--        // Aguarde 2 segundos e, em seguida, oculte o popup
+        // Aguarde 2 segundos e, em seguida, oculte o popup
         setTimeout(() => {
           setPopupVisible(false);
         }, 2000);
@@ -170,8 +181,8 @@ const RegistrarIngresso = () => {
 
   return (
     <Container>
-      <Title>Registre o Ingresso</Title>
       <FormContainer>
+      <Title>Registrar Ingresso</Title>
         <InputLabel>Nome:</InputLabel>
         <Input
           type="text"
@@ -190,15 +201,6 @@ const RegistrarIngresso = () => {
         </Link>
         {popupVisible && <Popup>QRCODE SALVO COM SUCESSO</Popup>}
       </FormContainer>
-      <h2>Ingressos Registrados:</h2>
-      <ul>
-        {ingressos.map((ingresso, index) => (
-          <li key={index}>
-            <strong>Nome:</strong> {ingresso.nome}, <strong>Contato:</strong>{" "}
-            {ingresso.contato},{" "}
-          </li>
-        ))}
-      </ul>
     </Container>
   );
 };
