@@ -80,11 +80,11 @@ const RegistrarIngresso = () => {
   // ...
 
   const gerarPDF = async () => {
-    if (nome && contato) { // Certifique-se de que o número está definido
+    if (nome && contato) { 
       const novoIngresso = {
         nome,
         contato,
-        numero, // Use o número extraído do código QR
+        numero, 
         lido
       };
 
@@ -115,7 +115,7 @@ const RegistrarIngresso = () => {
           width: qrCodeSize,
           height: qrCodeSize,
         };
-        // Gere o QR Code diretamente no PDF
+
         const qrCodeData = `Nome: ${response.data.nome}, Contato: ${response.data.contato}, Numero: ${response.data.numero}`;
 
 
@@ -154,7 +154,7 @@ const RegistrarIngresso = () => {
         setNome("");
         setContato("");
         setNumero("");
-        // Aguarde 2 segundos e, em seguida, oculte o popup
+-        // Aguarde 2 segundos e, em seguida, oculte o popup
         setTimeout(() => {
           setPopupVisible(false);
         }, 2000);
