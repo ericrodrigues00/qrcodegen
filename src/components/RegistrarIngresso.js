@@ -81,11 +81,10 @@ const RegistrarIngresso = () => {
 
   const gerarPDF = async () => {
     if (nome && contato) { 
-
     console.log('Nome:', nome); // Adicione esta linha
     console.log('Contato:', contato); // Adicione esta linha
     console.log('Número:', numero); // Adicione esta linha
-    console.log('Lido:', lido);
+    console.log('Lidoe:', lido);
       const novoIngresso = {
         nome,
         contato,
