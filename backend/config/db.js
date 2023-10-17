@@ -8,6 +8,7 @@ mongoose.connect('mongodb+srv://admin:adminadmin@cluster0.kp0ii67.mongodb.net/?r
 
 mongoose.connection.on('connected', () => {
   console.log('Conexão com o MongoDB estabelecida com sucesso!');
+  console.log('Conectado ao GITHUB!');
 });
 
 mongoose.connection.on('error', (err) => {
