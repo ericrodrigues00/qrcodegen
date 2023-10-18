@@ -12,13 +12,12 @@ const Container = styled.div`
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: 50vh;
-  
-`;
+  align-items: 100vh;`;
 
 const Title = styled.h1`
-  margin-bottom: 20px;
   text-transform: uppercase;
+  margin: 20px 0 0 40px;
+  text-align: left;
 `;
 //conteiner branco com as infos
 const FormContainer = styled.div`
@@ -28,7 +27,7 @@ const FormContainer = styled.div`
   gap: 20px;
   background-color: white;
   border-radius: 6px;
-  font-family: "Roboto"
+  font-family: "Outfit";
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
   padding: 60px 50px;
   max-width: 1000px;
@@ -62,7 +61,7 @@ const Button = styled.button`
   border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
+  font-family: "Outfit";
   &:hover {
     background-color: #512da8;
   }

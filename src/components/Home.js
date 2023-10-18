@@ -1,52 +1,143 @@
-// src/components/Home.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { FaTicketAlt, FaCamera, FaUserCheck} from 'react-icons/fa';
 
 const Container = styled.div`
-  text-align: center;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+  //justify-content: center;
+  //height: 100vh;
+  background-color: #f7f7f7;
+  @media (max-width: 768px) {
+    align-items: center; 
+    height: 100vh;
+  }
+  /*@media (max-width: 480px) {
+    align-items: center; 
+    height: 100vh;
+  }*/
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinhar o texto à esquerda */
+  margin: 20px 20px 60px 60px;
+  
+`;
+
+const Title = styled.h1`
+  font-size: 46px;
+  font-family: "Outfit";
+  font-weight: bold;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Centralize horizontalmente */
+  gap: 40px;
   margin-top: 20px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column; 
+    gap: 20px;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
 `;
 
 const Button = styled.button`
-  background-color: #6a1b9a;
-  color: white;
-  padding: 10px 20px;
+  background-color: white;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  padding: 60px 80px 20px 80px;
+  font-size: 20px;
+  text-transform: uppercase;
   transition: background-color 0.3s ease;
+  font-family: "Outfit";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  position: relative;
 
-  &:hover {
-    background-color: #512da8;
+  /*&:hover {
+    background-color: #a391d6;
+  }*/
+
+  &:after {
+    content: "";
+    height: 4px;
+    background-color: #6a1b9a;
+    width: 10%; 
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    border-radius: 5px;
+    transition: width 0.5s ease;
   }
+
+  &:hover:after {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    padding: 30px 40px 10px 40px; 
+    font-size: 16px; 
+    &:last-child {
+      margin-bottom: 20px;
+    }
+  }
+`;
+
+
+const Icon = styled.span`
+  font-size: 60px;
+  margin-bottom: 10px;
 `;
 
 const Home = () => {
   return (
-    <Container>  <ButtonContainer>
-    <Link to="/registrar">
-    <Button>Registrar Ingresso</Button>
-    </Link>
-    <Link to="/visualizar">
-    <Button>Visualizar Ingressos</Button>
-    </Link>
-    <Link to="/escanear">
-    <Button>Escanear Ingressos</Button>
-    </Link>
-    </ButtonContainer></Container>
-  
-   
-
-    
-  
+    <Container>
+      <TitleContainer>
+        <Title>PARMEJÓ 2023</Title>
+      </TitleContainer>
+      <ButtonContainer>
+        <StyledLink to="/registrar">
+          <Button>
+            <Icon>
+              <FaTicketAlt />
+            </Icon>
+            Registrar
+          </Button>
+        </StyledLink>
+        <StyledLink to="/escanear"> 
+          <Button>
+            <Icon>
+              <FaCamera />
+            </Icon>
+            Escanear
+          </Button>
+        </StyledLink>
+        <StyledLink to="/visualizar">
+          <Button>
+            <Icon>
+              <FaUserCheck />
+            </Icon>
+            Presentes
+          </Button>
+        </StyledLink>
+      </ButtonContainer>
+    </Container>
   );
 };
 
