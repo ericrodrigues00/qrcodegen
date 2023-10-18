@@ -12,12 +12,8 @@ const Container = styled.div`
   background-color: #f7f7f7;
   @media (max-width: 768px) {
     align-items: center; 
-    height: 100vh;
+    height: 100%;
   }
-  /*@media (max-width: 480px) {
-    align-items: center; 
-    height: 100vh;
-  }*/
 `;
 
 const TitleContainer = styled.div`
@@ -25,7 +21,10 @@ const TitleContainer = styled.div`
   flex-direction: column;
   align-items: flex-start; /* Alinhar o texto à esquerda */
   margin: 20px 20px 60px 60px;
-  
+  @media (max-width: 768px) {
+    align-items: center; 
+    margin: 0px;
+  }
 `;
 
 const Title = styled.h1`
