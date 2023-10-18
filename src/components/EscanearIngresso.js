@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
-import axios from 'axios'; // Importe o axios para fazer a solicitação à sua API.
+import axios from 'axios';
 import RegistrarIngresso from './RegistrarIngresso';
 
 const Container = styled.div`
@@ -12,41 +12,16 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
-const Title = styled.h1`
-  color: #6a1b9a;
-  margin-bottom: 20px;
-`;
-
-const ScannerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-`;
-
-const QRScanner = styled(QrScanner)`
-  max-width: 100%;
-`;
-
-const Popup = styled.div`
-  background-color: #6a1b9a;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 1;
-`;
+// ... (rest of your styled components)
 
 const EscanearIngresso = () => {
   const [resultadoScan, setResultadoScan] = useState(null);
   const [popupVisible, setPopupVisible] = useState(false);
-  const [redirect, setRedirect] = useState(null); 
+  const [redirect, setRedirect] = useState(null);
   const [lido, setLido] = useState(false);
+
+  // Adicione um estado para controlar a leitura do ingresso
+  const [leituraAtiva, setLeituraAtiva] = useState(true);
 
   const handleError = (error) => {
     console.error('Erro ao escanear o QR Code:', error);
@@ -58,37 +33,32 @@ const EscanearIngresso = () => {
   };
 
   const verificarIngresso = async (result) => {
-    try {
-      const qrCodeData = result.text;
-      console.log('URL lida pela câmera:', qrCodeData);
-      const numeroMatch = qrCodeData.match(/Numero: (\d+)/);
-      if (numeroMatch) {
-        const numero = numeroMatch[1];
-        const apiUrl = `https://api-eztickets.onrender.com/api/verificarIngresso?numero=${numero}`;
-        console.log('URL da API:', apiUrl); // Adicione esta linha para imprimir a URL no console
-        const response = await axios.get(apiUrl);
+    if (leituraAtiva) {
+      try {
+        // Resto do seu código de verificação do ingresso
+
         if (response.data.ingressoValido) {
           setResultadoScan('Ingresso Válido');
           setPopupVisible(true);
           setLido(true);
+
+          // Pausar a leitura após a validação do ingresso
+          setLeituraAtiva(false);
         } else {
-          if (response.data.message === "Ingresso já foi utilizado"){
-            setResultadoScan("Ingresso já foi utilizado")
-          }
-          else {
-          setResultadoScan('Ingresso Inválido');
-          }
-          setPopupVisible(true);
+          // Resto do seu código de tratamento para ingresso inválido
+        }
+      } catch (error) {
+        console.error('Erro ao verificar o ingresso:', error);
       }
-      } else {
-        console.error('Número não encontrado no código QR');
-      }
-    } catch (error) {
-      console.error('Erro ao verificar o ingresso:', error);
     }
   };
-  
-  
+
+  // Adicione um manipulador de evento para reiniciar a leitura
+  const reiniciarLeitura = () => {
+    setLeituraAtiva(true);
+    setResultadoScan(null);
+    setPopupVisible(false);
+  };
 
   return (
     <Container>
@@ -97,15 +67,22 @@ const EscanearIngresso = () => {
         <QRScanner
           onError={handleError}
           constraints={{
-            video: { facingMode: 'environment' }, 
+            video: { facingMode: 'environment' },
           }}
           onScan={(result) => {
             if (result) {
-              verificarIngresso(result); 
+              verificarIngresso(result);
             }
           }}
         />
-        {resultadoScan && <Popup onClick={fecharPopup}>{resultadoScan}</Popup>}
+        {resultadoScan && (
+          <Popup onClick={fecharPopup}>
+            {resultadoScan}
+            {resultadoScan === 'Ingresso Válido' && (
+              <button onClick={reiniciarLeitura}>LER NOVAMENTE</button>
+            )}
+          </Popup>
+        )}
       </ScannerContainer>
     </Container>
   );
