@@ -72,7 +72,8 @@ const EscanearIngresso = () => {
             setResultadoScan('Ingresso Válido');
             setPopupVisible(true);
             setLido(true);
-            setLeituraAtiva(false); // Pausar a leitura após a validação do ingresso
+            // Pausar a leitura após a validação do ingresso
+            setLeituraAtiva(false);
           } else {
             if (response.data.message === "Ingresso já foi utilizado") {
               setResultadoScan("Ingresso já foi utilizado");
@@ -111,14 +112,16 @@ const EscanearIngresso = () => {
             }
           }}
         />
-        {resultadoScan && (
-          <Popup onClick={fecharPopup}>
-            {resultadoScan}
-            {resultadoScan === 'Ingresso Válido' && (
-              <button onClick={reiniciarLeitura}>LER NOVAMENTE</button>
-            )}
-          </Popup>
-        )}
+        <div>
+          {resultadoScan && (
+            <Popup onClick={fecharPopup}>
+              {resultadoScan}
+            </Popup>
+          )}
+          {resultadoScan === 'Ingresso Válido' && (
+            <button onClick={reiniciarLeitura}>LER NOVAMENTE</button>
+          )}
+        </div>
       </ScannerContainer>
     </Container>
   );
