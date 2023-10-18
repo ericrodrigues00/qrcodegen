@@ -64,7 +64,7 @@ const EscanearIngresso = () => {
       const numeroMatch = qrCodeData.match(/Numero: (\d+)/);
       if (numeroMatch) {
         const numero = numeroMatch[1];
-        const apiUrl = `/api/verificarIngresso?Numero=${numero}`;
+        const apiUrl = `https://api-eztickets.onrender.com/api/verificarIngresso?numero=${numero}`;
         console.log('URL da API:', apiUrl); // Adicione esta linha para imprimir a URL no console
         const response = await axios.get(apiUrl);
         if (response.data.ingressoValido) {
