@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
-import axios from 'axios';
+import axios from 'axios'; // Importe o axios para fazer a solicitação à sua API.
 import RegistrarIngresso from './RegistrarIngresso';
 
 const Container = styled.div`
@@ -45,9 +45,8 @@ const Popup = styled.div`
 const EscanearIngresso = () => {
   const [resultadoScan, setResultadoScan] = useState(null);
   const [popupVisible, setPopupVisible] = useState(false);
-  const [redirect, setRedirect] = useState(null);
+  const [redirect, setRedirect] = useState(null); 
   const [lido, setLido] = useState(false);
-  const [leituraAtiva, setLeituraAtiva] = useState(true);
 
   const handleError = (error) => {
     console.error('Erro ao escanear o QR Code:', error);
@@ -59,43 +58,37 @@ const EscanearIngresso = () => {
   };
 
   const verificarIngresso = async (result) => {
-    if (leituraAtiva) {
-      try {
-        const qrCodeData = result.text;
-        const numeroMatch = qrCodeData.match(/Numero: (\d+)/);
-        if (numeroMatch) {
-          const numero = numeroMatch[1];
-          const apiUrl = `https://api-eztickets.onrender.com/api/verificarIngresso?numero=${numero}`;
-          const response = await axios.get(apiUrl);
-
-          if (response.data.ingressoValido) {
-            setResultadoScan('Ingresso Válido');
-            setPopupVisible(true);
-            setLido(true);
-            // Pausar a leitura após a validação do ingresso
-            setLeituraAtiva(false);
-          } else {
-            if (response.data.message === "Ingresso já foi utilizado") {
-              setResultadoScan("Ingresso já foi utilizado");
-            } else {
-              setResultadoScan('Ingresso Inválido');
-            }
-            setPopupVisible(true);
-          }
+    try {
+      const qrCodeData = result.text;
+      console.log('URL lida pela câmera:', qrCodeData);
+      const numeroMatch = qrCodeData.match(/Numero: (\d+)/);
+      if (numeroMatch) {
+        const numero = numeroMatch[1];
+        const apiUrl = `https://api-eztickets.onrender.com/api/verificarIngresso?numero=${numero}`;
+        console.log('URL da API:', apiUrl); // Adicione esta linha para imprimir a URL no console
+        const response = await axios.get(apiUrl);
+        if (response.data.ingressoValido) {
+          setResultadoScan('Ingresso Válido');
+          setPopupVisible(true);
+          setLido(true);
         } else {
-          console.error('Número não encontrado no código QR');
-        }
-      } catch (error) {
-        console.error('Erro ao verificar o ingresso:', error);
+          if (response.data.message === "Ingresso já foi utilizado"){
+            setResultadoScan("Ingresso já foi utilizado")
+          }
+          else {
+          setResultadoScan('Ingresso Inválido');
+          }
+          setPopupVisible(true);
       }
+      } else {
+        console.error('Número não encontrado no código QR');
+      }
+    } catch (error) {
+      console.error('Erro ao verificar o ingresso:', error);
     }
   };
-
-  const reiniciarLeitura = () => {
-    setLeituraAtiva(true);
-    setResultadoScan(null);
-    setPopupVisible(false);
-  };
+  
+  
 
   return (
     <Container>
@@ -104,24 +97,15 @@ const EscanearIngresso = () => {
         <QRScanner
           onError={handleError}
           constraints={{
-            video: { facingMode: 'environment' },
+            video: { facingMode: 'environment' }, 
           }}
           onScan={(result) => {
             if (result) {
-              verificarIngresso(result);
+              verificarIngresso(result); 
             }
           }}
         />
-        <div>
-          {resultadoScan && (
-            <Popup onClick={fecharPopup}>
-              {resultadoScan}
-            </Popup>
-          )}
-          {resultadoScan === 'Ingresso Válido' && (
-            <button onClick={reiniciarLeitura}>LER NOVAMENTE</button>
-          )}
-        </div>
+        {resultadoScan && <Popup onClick={fecharPopup}>{resultadoScan}</Popup>}
       </ScannerContainer>
     </Container>
   );
