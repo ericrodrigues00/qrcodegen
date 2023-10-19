@@ -54,7 +54,7 @@ const QRScanner = styled(QrScanner)`
 `;
 
 const Popup = styled.div`
-  background-color: #fff;
+  background-color: red;
   color: #000;
   padding: 10px 20px;
   border-radius: 5px;
