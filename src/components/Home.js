@@ -6,10 +6,7 @@ import { FaTicketAlt, FaCamera, FaUserCheck} from 'react-icons/fa';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  //align-items: center;
-  //justify-content: center;
-  height: 100vh;
-  //background-color: #f7f7f7;
+  min-height: 100vh;
   @media (max-width: 768px) {
     align-items: center; 
     height: 100%;

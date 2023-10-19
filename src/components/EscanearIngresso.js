@@ -1,20 +1,40 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
 import axios from 'axios'; // Importe o axios para fazer a solicitação à sua API.
 import RegistrarIngresso from './RegistrarIngresso';
 
 const Container = styled.div`
-  text-align: center;
-  padding: 20px;
-  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+  @media (max-width: 768px) {
+    align-items: center; 
+    height: 100%;
+  }
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  margin: 20px 20px 60px 60px;
+  @media (max-width: 768px) {
+    align-items: center; 
+    margin: 0px;
+  }
 `;
 
 const Title = styled.h1`
-  color: #6a1b9a;
-  margin-bottom: 20px;
+font-size: 46px;
+font-family: "Outfit";
+font-weight: bold;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
 `;
 
 const ScannerContainer = styled.div`
@@ -22,24 +42,28 @@ const ScannerContainer = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: white;
-  padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-`;
+  width: 50%;
+  margin: 0 auto;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+
+  `;
 
 const QRScanner = styled(QrScanner)`
-  max-width: 100%;
+  width: 50%;
 `;
 
 const Popup = styled.div`
-  background-color: #6a1b9a;
-  color: white;
+  background-color: #fff;
+  color: #000;
   padding: 10px 20px;
   border-radius: 5px;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1;
+  display: ${(props) => (props.visible ? 'block' : 'none')};
 `;
 
 const EscanearIngresso = () => {
@@ -64,7 +88,8 @@ const EscanearIngresso = () => {
       const numeroMatch = qrCodeData.match(/Numero: (\d+)/);
       if (numeroMatch) {
         const numero = numeroMatch[1];
-        const apiUrl = `https://api-eztickets.onrender.com/api/verificarIngresso?numero=${numero}`;
+        //const apiUrl = `https://api-eztickets.onrender.com/api/verificarIngresso?numero=${numero}`;
+        const apiUrl = `http://localhost:3002/api/verificarIngresso?numero=${numero}`;
         console.log('URL da API:', apiUrl); // Adicione esta linha para imprimir a URL no console
         const response = await axios.get(apiUrl);
         if (response.data.ingressoValido) {
@@ -92,7 +117,11 @@ const EscanearIngresso = () => {
 
   return (
     <Container>
-      <Title>Escanear Ingresso</Title>
+      <TitleContainer>
+      <Title>
+        <StyledLink to="/">PARMEJÓ 2023</StyledLink>
+      </Title>
+      </TitleContainer>
       <ScannerContainer>
         <QRScanner
           onError={handleError}
