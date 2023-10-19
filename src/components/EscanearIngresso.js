@@ -63,7 +63,7 @@ const Popup = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  display: ${(props) => (props.visible ? 'block' : 'none')};
+  //display: ${(props) => (props.visible ? 'block' : 'none')};
 `;
 
 const EscanearIngresso = () => {
