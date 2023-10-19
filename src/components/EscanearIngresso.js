@@ -94,7 +94,7 @@ const Icon = styled.div`
 `;
 
 const IconType = ({ message }) => {
-  if (message === 'Ingresso válido!') {
+  if (message === 'Ingresso Válido!') {
     return (
       <Icon>
         <FaKissBeam size={64} color="#6a1b9a" />
