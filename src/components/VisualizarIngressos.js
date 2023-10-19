@@ -4,28 +4,40 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const PageContainer = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-  background-color: white; /* Fundo branco */
-`;
-
-const ContentContainer = styled.div`
-  padding: 20px;
-  background-color: #a391d6;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: white; /* Fundo branco */
+  border-radius: 6px;
+  gap: 20px;
+  font-family: "Outfit";
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+  padding: 60px 50px;
+  width: 80%;
+  `;
+
+const ContentContainer = styled.div`
+  padding: 30px;
+  background-color: #a391d6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #a391d6;
+  width: 96%;
+  
 `;
 
 
 const Title = styled.h1`
-  color: #6a1b9a;
+  color: "black";
   align-items: center;
-  position: center;
+  position: left;
+  font-family: "Outfit";
+  text-transform: uppercase;
+
 `;
 
 const StyledTable = styled.table`
@@ -33,31 +45,40 @@ const StyledTable = styled.table`
   align-items: center;
   border-collapse: collapse;
   text-align: center;
-  margin: 0px auto;
   caption-side: top;
   vertical-align: middle;
   margin-bottom: 50px;
-  width: ${props => props.width || 'auto'};
+  letter-spacing: 1px;
+  table-layout: fixed;
+  width: 100%;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
   tbody {
-    vertical-align: middle;
+    vertical-align: center;
+    margin: 0px auto;
   }
   td,
   th {
     border: none;
+
   }
 
   td {
-    padding: 5px 135px;
+    padding: 5px 0px;
   }
 
   thead > tr {
-    background-color: #c2c2c2;
+    background-color: #A1968B;
   }
 
   caption {
     font-size: 0.9em;
     padding: 5px;
     font-weight: bold;
+    text-align: left;
+    color: "blue";
+    margin-bottom: 16px;
   }
 
   tr:nth-child(odd) {
@@ -81,13 +102,14 @@ const Button = styled.button`
   color: white;
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
+  border-bottom: 20px solid;
   &:hover {
     background-color: #512da8;
   }
+
 `;
 const Tr = styled.tr`
   text-align: center;
@@ -101,7 +123,9 @@ const Tr = styled.tr`
 //teste
 const ThCustom = styled.th`
   padding: 5px 20px; /* Estilo personalizado para a coluna específica */
-`;
+  background-color: #333;
+  color: white;
+ `;
 
 const TdCustom = styled.td`
   padding: 5px 100px; /* Estilo personalizado para a coluna específica */
@@ -133,8 +157,8 @@ const VisualizarIngressos = () => {
           <thead>
             <tr>
             <ThCustom>NOME</ThCustom>
-              <th>CONTATO</th>
-              <th>UTILIZADO</th>
+              <ThCustom>CONTATO</ThCustom>
+              <ThCustom>UTILIZADO</ThCustom>
             </tr>
           </thead>
           <tbody>

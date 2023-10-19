@@ -18,6 +18,7 @@ const Title = styled.h1`
   text-transform: uppercase;
   margin: 20px 0 0 40px;
   text-align: left;
+  font-family: "Outfit";
 `;
 //conteiner branco com as infos
 const FormContainer = styled.div`
@@ -41,6 +42,8 @@ const FormContainer = styled.div`
 const InputLabel = styled.label`
   font-weight: bold;
   color: #6a1b9a;
+  font-family: "Outfit";
+  text-transform: uppercase;
 `;
 
 const Input = styled.input`
@@ -50,6 +53,8 @@ const Input = styled.input`
   border-bottom: 1px solid #666;
   width: 45%;
   font-weight: bold;
+  font-family: "Outfit";
+  
   
 `;
 
@@ -62,9 +67,9 @@ const Button = styled.button`
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-family: "Outfit";
-  &:hover {
-    background-color: #512da8;
-  }
+  /*&:hover {
+    background-color: #a391d6;
+  }*/
 `;
 
 const QRCodeContainer = styled.div`
@@ -188,15 +193,16 @@ const RegistrarIngresso = () => {
           value={nome}
           onChange={(e) => setNome(e.target.value)}
         />
-        <InputLabel>Contato:</InputLabel>
+        <InputLabel>E-mail:</InputLabel>
         <Input
           type="text"
+          class="botãonome"
           value={contato}
           onChange={(e) => setContato(e.target.value)}
         />
         <Button onClick={gerarPDF}>SALVAR QRCODE</Button>
         <Link to="/">
-          <Button>Voltar para a Home</Button>
+          <Button>VOLTAR PARA A HOME</Button>
         </Link>
         {popupVisible && <Popup>QRCODE SALVO COM SUCESSO</Popup>}
       </FormContainer>
