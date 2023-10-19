@@ -4,6 +4,7 @@ import QrScanner from 'react-qr-scanner';
 import styled from 'styled-components';
 import axios from 'axios'; // Importe o axios para fazer a solicitação à sua API.
 import RegistrarIngresso from './RegistrarIngresso';
+import { FaCheck, FaSadCry, FaKissBeam } from 'react-icons/fa'
 
 const Container = styled.div`
   display: flex;
@@ -54,17 +55,60 @@ const QRScanner = styled(QrScanner)`
 `;
 
 const Popup = styled.div`
-  background-color: red;
+  background-color: white;
   color: #000;
-  padding: 10px 20px;
+  //padding: 120px 100px;
   border-radius: 5px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1;
+  z-index: 2;
   //display: ${(props) => (props.visible ? 'block' : 'none')};
 `;
+
+const PopupOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1; 
+  //display: ${(props) => (props.visible ? 'block' : 'none')};
+`;
+
+const PopupContent = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 50px 90px 40px 90px;
+`;
+
+
+const Icon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 70px;
+`;
+
+const IconType = ({ message }) => {
+  if (message === 'Ingresso válido!') {
+    return (
+      <Icon>
+        <FaKissBeam size={64} color="#6a1b9a" />
+      </Icon>
+    );
+  } else {
+    return (
+      <Icon>
+        <FaSadCry size={64} color="red" />
+      </Icon>
+    );
+  } 
+};
+
 
 const EscanearIngresso = () => {
   const [resultadoScan, setResultadoScan] = useState(null);
@@ -93,15 +137,15 @@ const EscanearIngresso = () => {
         console.log('URL da API:', apiUrl); // Adicione esta linha para imprimir a URL no console
         const response = await axios.get(apiUrl);
         if (response.data.ingressoValido) {
-          setResultadoScan('Ingresso Válido');
+          setResultadoScan('Ingresso Válido!');
           setPopupVisible(true);
           setLido(true);
         } else {
           if (response.data.message === "Ingresso já foi utilizado"){
-            setResultadoScan("Ingresso já foi utilizado")
+            setResultadoScan("Ingresso já foi utilizado!")
           }
           else {
-          setResultadoScan('Ingresso Inválido');
+          setResultadoScan('Ingresso Inválido!');
           }
           setPopupVisible(true);
       }
@@ -134,7 +178,15 @@ const EscanearIngresso = () => {
             }
           }}
         />
-        {resultadoScan && <Popup onClick={fecharPopup}>{resultadoScan}</Popup>}
+        {resultadoScan && (
+          <div>
+            <PopupOverlay visible={popupVisible} onClick={fecharPopup} />
+            <Popup onClick={fecharPopup}>
+              <IconType message={resultadoScan} />
+              <PopupContent>{resultadoScan}</PopupContent>
+            </Popup>
+          </div>
+        )}
       </ScannerContainer>
     </Container>
   );
