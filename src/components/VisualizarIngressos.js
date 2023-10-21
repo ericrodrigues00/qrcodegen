@@ -15,6 +15,10 @@ const PageContainer = styled.div`
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
   padding: 60px 50px;
   width: 80%;
+  @media (max-width: 768px) {
+    align-items: center; 
+    height: 100%;
+  }
   `;
 
 const ContentContainer = styled.div`
@@ -27,6 +31,10 @@ const ContentContainer = styled.div`
   text-align: center;
   background-color: #a391d6;
   width: 96%;
+  @media (max-width: 768px) {
+    align-items: center; 
+    margin: 0px;
+  }
   
 `;
 
@@ -52,7 +60,7 @@ const StyledTable = styled.table`
   table-layout: fixed;
   width: 100%;
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: 12px;
   }
   tbody {
     vertical-align: center;

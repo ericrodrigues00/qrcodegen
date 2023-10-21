@@ -4,8 +4,8 @@ import api from "../api";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import QRCode from "qrcode";
-
 // conteiner roxo
+
 const Container = styled.div`
   padding: 20px;
   background-color: #a391d6;
@@ -16,9 +16,12 @@ const Container = styled.div`
 
 const Title = styled.h1`
   text-transform: uppercase;
-  margin: 20px 0 0 40px;
   text-align: left;
   font-family: "Outfit";
+  @media (max-width: 768px) {
+    font-size: 30px;
+    text-align: CENTER;
+  }
 `;
 //conteiner branco com as infos
 const FormContainer = styled.div`
@@ -54,7 +57,9 @@ const Input = styled.input`
   width: 45%;
   font-weight: bold;
   font-family: "Outfit";
-  
+  @media (max-width: 768px) {
+    width: 70%;
+  }
   
 `;
 
