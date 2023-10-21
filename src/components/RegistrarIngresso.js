@@ -110,9 +110,10 @@ const RegistrarIngresso = () => {
       try {
         // Faça a solicitação POST para o backend para registrar o ingresso
         const response = await api.post("/api/ingressos", novoIngresso);
+       
+        const numero = response.data.numero;
+        const fileName = `${nome} - ${numero}.pdf`;
 
-        // Crie um novo documento PDF
-        const fileName = "Ingresso - " + {nome} + " .pdf";
         const doc = new jsPDF();
 
         // Configurações para centralizar conteúdo
