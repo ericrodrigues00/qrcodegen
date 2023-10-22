@@ -50,6 +50,10 @@ const Title = styled.h1`
   font-size: 46px;
   font-family: "Outfit";
   font-weight: bold;
+  text-transform: uppercase;
+  @media (max-width: 768px) {
+    font-size: 40px;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -230,7 +234,7 @@ const VisualizarIngressos = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>PARMEJÓ 2023</Title>
+        <Title>Visuzlizar Ingressos</Title>
       </TitleContainer>
       <FormContainer>
         <Input

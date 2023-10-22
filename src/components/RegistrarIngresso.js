@@ -31,6 +31,10 @@ const Title = styled.h1`
   font-size: 46px;
   font-family: "Outfit";
   font-weight: bold;
+  text-transform: uppercase;
+  @media (max-width: 768px) {
+    font-size: 40px;
+  }
 `;
 
 
@@ -262,7 +266,7 @@ const RegistrarIngresso = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>PARMEJÓ 2023</Title>
+        <Title>Registrar Ingressos</Title>
       </TitleContainer>
       <FormContainer>
         <InputLabel>Nome:</InputLabel>
