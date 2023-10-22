@@ -35,13 +35,11 @@ const Container = styled.div`
   }
 `;
 
-
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Alinhar o texto à esquerda */
-  margin: 20px 20px 40px 60px;
-  text-transform: uppercase;
+  margin: 20px 20px 60px 60px;
   @media (max-width: 768px) {
     align-items: center; 
     margin: 0px;
@@ -52,11 +50,8 @@ const Title = styled.h1`
   font-size: 46px;
   font-family: "Outfit";
   font-weight: bold;
-  @media (max-width: 768px) {
-    align-items: center; 
-    font-size: 40px;
-  }
 `;
+
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -144,7 +139,8 @@ const Button = styled.button`
   align-items: center;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   position: relative;
-
+  height:50px;
+  width:300px;
   /*&:hover {
     background-color: #a391d6;
   }*/
@@ -167,6 +163,8 @@ const Button = styled.button`
 
   @media (max-width: 768px) { 
     font-size: 16px; 
+    height:50px;
+    width:250px;
     &:last-child {
       margin-bottom: 20px;
     }
@@ -232,7 +230,7 @@ const VisualizarIngressos = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>Visualizar Ingressos</Title>
+        <Title>PARMEJÓ 2023</Title>
       </TitleContainer>
       <FormContainer>
         <Input

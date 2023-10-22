@@ -21,7 +21,6 @@ const TitleContainer = styled.div`
   flex-direction: column;
   align-items: flex-start; /* Alinhar o texto à esquerda */
   margin: 20px 20px 60px 60px;
-  text-transform: uppercase;
   @media (max-width: 768px) {
     align-items: center; 
     margin: 0px;
@@ -32,11 +31,8 @@ const Title = styled.h1`
   font-size: 46px;
   font-family: "Outfit";
   font-weight: bold;
-  @media (max-width: 768px) {
-    align-items: center;
-    font-size: 42px;
-  }
 `;
+
 
 //conteiner branco com as infos
 const FormContainer = styled.div`
@@ -77,6 +73,7 @@ const Input = styled.input`
   font-family: "Outfit";
   @media (max-width: 768px) {
     width: 100%;
+    text-align: center;
   }
   
 `;
@@ -109,7 +106,8 @@ const Button = styled.button`
   align-items: center;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   position: relative;
-
+  height:50px;
+  width:300px;
   /*&:hover {
     background-color: #a391d6;
   }*/
@@ -132,6 +130,8 @@ const Button = styled.button`
 
   @media (max-width: 768px) { 
     font-size: 16px; 
+    height:50px;
+    width:250px;
     &:last-child {
       margin-bottom: 20px;
     }
@@ -148,7 +148,7 @@ const Popup = styled.div`
   top: 20px;
   right: 20px;
   z-index: 1;
-`; 
+`;
 
 
 const RegistrarIngresso = () => {
@@ -262,7 +262,7 @@ const RegistrarIngresso = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>Registrar Ingresso</Title>
+        <Title>PARMEJÓ 2023</Title>
       </TitleContainer>
       <FormContainer>
         <InputLabel>Nome:</InputLabel>

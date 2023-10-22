@@ -47,9 +47,7 @@ const ScannerContainer = styled.div`
   margin: 0 auto;
   padding: 0px 0px 0px 0px;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
-  @media (max-width: 768px) {
-    padding: 200px 65px 65px 65px;
-  }
+  
 `;
 
 const QRScanner = styled(QrScanner)`
@@ -121,7 +119,8 @@ const Button = styled.button`
   align-items: center;
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   position: relative;
-
+  height:50px;
+  width:300px;
   /*&:hover {
     background-color: #a391d6;
   }*/
@@ -144,6 +143,8 @@ const Button = styled.button`
 
   @media (max-width: 768px) { 
     font-size: 16px; 
+    height:50px;
+    width:250px;
     &:last-child {
       margin-bottom: 20px;
     }
