@@ -52,7 +52,7 @@ const Title = styled.h1`
   font-weight: bold;
   text-transform: uppercase;
   @media (max-width: 768px) {
-    font-size: 40px;
+    font-size: 34px;
   }
 `;
 
