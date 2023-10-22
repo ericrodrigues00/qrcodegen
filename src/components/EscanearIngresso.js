@@ -10,7 +10,7 @@ const Container = styled.div`
   flex-direction: column;
   min-height: 100vh;
   @media (max-width: 768px) {
-    align-items: center;
+    align-items: center; 
     height: 100%;
   }
 `;
@@ -42,14 +42,18 @@ const ScannerContainer = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: white;
-  border-radius: 10px;
-  width: 50%;
+  border-radius: 5px;
+  width: 60%;
   margin: 0 auto;
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+  padding: 0px 0px 0px 0px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+  @media (max-width: 768px) {
+    padding: 200px 65px 65px 65px;
+  }
 `;
 
 const QRScanner = styled(QrScanner)`
-  width: 50%;
+  width: 85%;
 `;
 
 const Popup = styled.div`
@@ -86,6 +90,66 @@ const Icon = styled.div`
   justify-content: center;
   margin-top: 70px;
 `;
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Centralize horizontalmente */
+  gap: 40px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  
+  
+  @media (max-width: 768px) {
+    flex-direction: column; 
+    gap: 20px;
+  }
+`;
+const Button = styled.button`
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 15px 40px 10px 40px;
+  font-size: 20px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+  font-family: "Outfit";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  position: relative;
+
+  /*&:hover {
+    background-color: #a391d6;
+  }*/
+
+  &:after {
+    content: "";
+    height: 4px;
+    background-color: #6a1b9a;
+    width: 10%; 
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    border-radius: 5px;
+    transition: width 0.5s ease;
+  }
+
+  &:hover:after {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) { 
+    font-size: 16px; 
+    &:last-child {
+      margin-bottom: 20px;
+    }
+  }
+`;
+
 
 const IconType = ({ message }) => {
   if (message === 'Ingresso Válido!') {
@@ -127,6 +191,9 @@ const EscanearIngresso = () => {
   const fecharPopup = () => {
     setResultadoScan(null);
     setPopupVisible(false);
+
+    // Recarrega a página automaticamente após fechar o popup
+    window.location.reload();
   };
 
   const verificarIngresso = async (result) => {
@@ -175,9 +242,9 @@ const EscanearIngresso = () => {
   return (
     <Container>
       <TitleContainer>
-      <Title>
-        <StyledLink to="/">PARMEJÓ 2023</StyledLink>
-      </Title>
+        <Title>
+          <StyledLink to="/">PARMEJÓ 2023</StyledLink>
+        </Title>
       </TitleContainer>
       <ScannerContainer>
         <QRScanner
@@ -201,6 +268,11 @@ const EscanearIngresso = () => {
           </div>
         )}
       </ScannerContainer>
+      <ButtonContainer>
+          <Link to="/" style={{textDecoration: 'none'}}>
+            <Button>VOLTAR PARA A HOME</Button>
+          </Link>
+        </ButtonContainer>
     </Container>
   );
 };

@@ -32,7 +32,10 @@ const Title = styled.h1`
   font-size: 46px;
   font-family: "Outfit";
   font-weight: bold;
-
+  @media (max-width: 768px) {
+    align-items: center;
+    font-size: 42px;
+  }
 `;
 
 //conteiner branco com as infos
@@ -41,8 +44,6 @@ const FormContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 30px;
-  background-color: white;
-  border-radius: 6px;
   font-family: "Outfit";
   padding: 0px 30px;
   max-width: 1000px;
@@ -55,6 +56,7 @@ const FormContainer = styled.div`
     align-items: center; 
     padding: 20px 30px;
     gap: 25px;
+    width: auto;
   }
 `;
 
@@ -74,11 +76,23 @@ const Input = styled.input`
   font-size: 20px;
   font-family: "Outfit";
   @media (max-width: 768px) {
-    width: 70%;
+    width: 100%;
   }
   
 `;
-
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centralize horizontalmente */
+  gap: 30px;
+  margin-top: 20px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column; 
+    gap: 20px;
+  }
+`;
 const Button = styled.button`
   background-color: white;
   color: black;
@@ -124,9 +138,6 @@ const Button = styled.button`
   }
 `;
 
-const QRCodeContainer = styled.div`
-  margin-top: 20px;
-`;
 
 const Popup = styled.div`
   background-color: #6a1b9a;
@@ -181,8 +192,9 @@ const RegistrarIngresso = () => {
         doc.setFillColor(154, 95, 192);
         doc.rect(0, 0, 210, 297, "F");
         const textX = pageWidth / 2; // Centraliza horizontalmente
-        doc.text("PARMEJÓ 2023", textX, 40, null, null, "center");
+        doc.text("PARMEJÓ 2023", textX, 30, null, null, "center");
         doc.setFontSize(32); 
+        doc.setFont("helvetica", "normal");
         doc.text(
           `ID: ${response.data.numero}`,
           textX,
@@ -267,11 +279,13 @@ const RegistrarIngresso = () => {
           placeholder="email@email.com"
           onChange={(e) => setContato(e.target.value)}
         />
-        <Button onClick={gerarPDF}>SALVAR QRCODE</Button>
-        <Link to="/">
-          <Button>VOLTAR PARA A HOME</Button>
-        </Link>
-        {popupVisible && <Popup>QRCODE SALVO COM SUCESSO</Popup>}
+        <ButtonContainer>
+          <Button onClick={gerarPDF}>SALVAR QRCODE</Button>
+          <Link to="/" style={{textDecoration: 'none'}}>
+            <Button>VOLTAR PARA A HOME</Button>
+          </Link>
+          {popupVisible && <Popup>QRCODE SALVO COM SUCESSO</Popup>}
+        </ButtonContainer>
       </FormContainer>
     </Container>
   );
