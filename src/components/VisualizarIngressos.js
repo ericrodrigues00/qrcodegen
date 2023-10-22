@@ -52,7 +52,7 @@ const Title = styled.h1`
   font-weight: bold;
   text-transform: uppercase;
   @media (max-width: 768px) {
-    font-size: 34px;
+    font-size: 30px;
   }
 `;
 
@@ -234,7 +234,7 @@ const VisualizarIngressos = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>Visuzlizar Ingressos</Title>
+        <Title>Visualizar Ingressos</Title>
       </TitleContainer>
       <FormContainer>
         <Input
