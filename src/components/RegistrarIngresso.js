@@ -278,16 +278,18 @@ const RegistrarIngresso = () => {
           nome: nome,
           contato: contato,
           numero: numero,
+          pdf: pdfDataUri
         };
         
         // Exiba o popup de confirmação
         setPopupVisible(true);
         await api.get("/api/sendQR", {params: NEWQRCode});
-
+        //FIM DA PARTE NOVA
+        // Limpe os campos de nome e contato
         setNome("");
         setContato("");
         setNumero("");
-
+        // Aguarde 2 segundos e, em seguida, oculte o popup
         setTimeout(() => {
           setPopupVisible(false);
         }, 2000);
