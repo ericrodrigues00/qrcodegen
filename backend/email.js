@@ -45,12 +45,7 @@ function sendEmailWithAttachment(
     });
   }
   
-  // Example usage:
-  const from = "texticketsexchange@gmail.com";
-  const to = 'jvinicius2002@gmail.com';
-  const subject = 'Email Subject';
-  const text = 'Email Text';
-  const pdfFileName = 'example.pdf';
-  const pdfFilePath = path.join("C:/Users/sammy/Downloads/joao - 863985.pdf");
-  
-  sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
+
+module.exports = {
+    sendEmailWithAttachment
+};
