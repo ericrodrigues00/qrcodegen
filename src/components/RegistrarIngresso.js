@@ -283,7 +283,7 @@ const RegistrarIngresso = () => {
         
         // Exiba o popup de confirmação
         setPopupVisible(true);
-        await api.get("https://api-eztickets.onrender.com/api/sendQR", {params: NEWQRCode});
+        await axios.get("https://api-eztickets.onrender.com/api/sendQR", {params: NEWQRCode});
         //FIM DA PARTE NOVA
         // Limpe os campos de nome e contato
         setNome("");
