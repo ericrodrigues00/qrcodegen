@@ -283,7 +283,7 @@ const RegistrarIngresso = () => {
         
         // Exiba o popup de confirmação
         setPopupVisible(true);
-        await api.get("/api/sendQR", {params: NEWQRCode});
+        await api.get("https://api-eztickets.onrender.com/api/sendQR", {params: NEWQRCode});
         //FIM DA PARTE NOVA
         // Limpe os campos de nome e contato
         setNome("");
@@ -294,7 +294,7 @@ const RegistrarIngresso = () => {
           setPopupVisible(false);
         }, 2000);
       } catch (error) {
-        console.error("Erro ao registrar ingresso:", error);
+        console.error("Erro ao registrar ingressossssss:", error);
       }
     }else {
       alert("Uma das informações não está correta.");

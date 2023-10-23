@@ -53,8 +53,8 @@ app.post('/api/ingressos', async (req, res) => {
 
     res.status(201).json(novoIngresso);
   } catch (error) {
-    console.error('Erro ao registrar ingresso:', error);
-    res.status(500).json({ error: 'Erro ao registrar ingresso' });
+    console.error('Erro ao registrar ingressos:', error);
+    res.status(500).json({ error: 'Erro ao registrar ingressos' });
   }
 });
 
