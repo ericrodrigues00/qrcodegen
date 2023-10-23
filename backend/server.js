@@ -1,16 +1,16 @@
-// server.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Ingresso = require('./models/Ingresso'); // Importe o modelo de Ingresso
 const db = require('./config/db'); // Importe a configuração do MongoDB
-
+const fs = require("fs");
+const {spawn} = require("child_process");
+const { request } = require('http');
 const app = express();
+const emailModule = require('../backend/email'); // Replace with the actual path to email.js
 
 app.use(bodyParser.json());
 app.use(cors()); // Habilita o CORS
-
-
 
 // Rota para verificar a validade do ingresso
 app.get('/api/verificarIngresso', async (req, res) => {
@@ -46,9 +46,10 @@ app.post('/api/ingressos', async (req, res) => {
 
     const numeroAleatorio = Math.floor(Math.random() * 1000000)
     const novoIngresso = new Ingresso({ nome, contato, numero: numeroAleatorio, lido });
+    
 
     // Salve o ingresso no banco de dados
-    await novoIngresso.save();
+    //await novoIngresso.save();
 
     res.status(201).json(novoIngresso);
   } catch (error) {
@@ -73,3 +74,26 @@ app.get('/api/ingressos', async (req, res) => {
       res.status(500).json({ error: 'Erro ao buscar ingressos' });
     }
   });
+
+
+app.get('/api/sendQR', (req, res) => {
+  // Example usage of sendEmailWithAttachment
+  const nome = req.query.nome;
+  const numero = req.query.numero;
+  const pdf = req.query.pdf;
+
+  const from = "texticketsexchange@gmail.com";
+  const to = req.query.contato;
+  const subject = 'Ingressos Parmejó 2023';
+  const text = 'Olá, tudo bem? Seu Ingresso para o PARMEJÓ2023 já está disponível!';
+  const pdfFileName = `${nome} - ${numero}.pdf`;
+  const pdfBase64Data = pdf;
+
+  emailModule.sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfBase64Data);
+
+  res.send('Email sent.');
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
