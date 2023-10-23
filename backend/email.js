@@ -47,7 +47,7 @@ function sendEmailWithAttachment(
   
   // Example usage:
   const from = "texticketsexchange@gmail.com";
-  const to = 'maurosdr@hotmail.com';
+  const to = "jvinicius2002@gmail.com";
   const subject = 'Email Subject';
   const text = 'Email Text';
   const pdfFileName = 'example.pdf';
