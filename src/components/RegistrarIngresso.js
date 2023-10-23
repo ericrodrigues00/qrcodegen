@@ -161,11 +161,25 @@ const RegistrarIngresso = () => {
   const [lido, setLido] = useState(false);
   const [ingressos, setIngressos] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [isValid, setIsValid] = useState(true);
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    const valid = validateEmail(email);
+
+    setContato(email);
+    setIsValid(valid);
+  };
 
   // ...
 
   const gerarPDF = async () => {
-    if (nome && contato) { // Certifique-se de que o número está definido
+    if (nome && contato && isValid) { // Certifique-se de que o número está definido
       const novoIngresso = {
         nome,
         contato,
@@ -178,6 +192,7 @@ const RegistrarIngresso = () => {
         const response = await api.post("/api/ingressos", novoIngresso);
        
         const numero = response.data.numero;
+
         const fileName = `${nome} - ${numero}.pdf`;
 
         const doc = new jsPDF();
@@ -190,18 +205,18 @@ const RegistrarIngresso = () => {
 
         // Defina estilos de fonte, cor de fundo e tamanho de fonte
         doc.setFont("helvetica", "bold");
-        doc.setFontSize(46); // Tamanho da fonte aumentado para 18
-        doc.setTextColor(255, 255, 255);
-        doc.setFillColor(154, 95, 192);
+        doc.setFontSize(36); // Tamanho da fonte aumentado para 18
+        doc.setTextColor(0, 0, 0);
+        doc.setFillColor(255, 255, 255);
         doc.rect(0, 0, 210, 297, "F");
         const textX = pageWidth / 2; // Centraliza horizontalmente
         doc.text("PARMEJÓ 2023", textX, 30, null, null, "center");
-        doc.setFontSize(32); 
+        doc.setFontSize(26); 
         doc.setFont("helvetica", "normal");
         doc.text(
           `ID: ${response.data.numero}`,
           textX,
-          60,
+          50,
           null,
           null,
           "center"
@@ -212,6 +227,18 @@ const RegistrarIngresso = () => {
           width: qrCodeSize,
           height: qrCodeSize,
         };
+        // Calcula a posição central para o QR Code
+        const qrCodeX = contentX + (contentWidth - qrCodeSize) / 2;
+        const qrCodeY = 70; // Define a posição vertical
+        
+        const purpleSquareSize = 90; // Adjust the size as needed
+        const purpleSquareX = (pageWidth - purpleSquareSize) / 2; // Centered horizontally
+        const purpleSquareY = qrCodeY - 7.5; // Position below the QR Code
+        
+        // Draw the purple square
+        doc.setFillColor(106, 27, 154); // Use purple color
+        doc.rect(purpleSquareX, purpleSquareY, purpleSquareSize, purpleSquareSize, "F"); // "F" means fill
+        
         // Gere o QR Code diretamente no PDF
         const qrCodeData = `Nome: ${response.data.nome}, Contato: ${response.data.contato}, Numero: ${response.data.numero}`;
 
@@ -220,17 +247,14 @@ const RegistrarIngresso = () => {
         QRCode.toCanvas(canvas, qrCodeData, qrCodeConfiguration);
         const imgData = canvas.toDataURL("image/png");
 
-        // Calcula a posição central para o QR Code
-        const qrCodeX = contentX + (contentWidth - qrCodeSize) / 2;
-        const qrCodeY = 70; // Define a posição vertical
 
         // Exibir nome e contato no centro
         
         const textY = qrCodeY + qrCodeSize + 25;
-        doc.setFontSize(28);
-        doc.text(`NOME: ${response.data.nome}`, textX, textY, null, null, "center");
+        doc.setFontSize(22);
+        doc.text(`Nome: ${response.data.nome}`, textX, textY, null, null, "center");
         doc.text(
-          `EMAIL: ${response.data.contato}`,
+          `Email: ${response.data.contato}`,
           textX,
           textY + 15,
           null,
@@ -238,16 +262,29 @@ const RegistrarIngresso = () => {
           "center"
         );
 
-
+        doc.setFontSize(16);
+        doc.text("Bethel 22 Lotus Jundiaí", textX , textY+ 110, null, null, "center");
+        
         // Defina a posição e o tamanho do QR Code
         doc.addImage(imgData, "PNG", qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
 
+        
         // Salve o PDF
         doc.save(fileName);
+        //PARTE NOVA
+        const pdfDataUri = doc.output('datauristring');
 
+        const NEWQRCode = {
+          nome: nome,
+          contato: contato,
+          numero: numero,
+          pdf: pdfDataUri
+        };
+        
         // Exiba o popup de confirmação
         setPopupVisible(true);
-
+        await api.get("https://api-eztickets.onrender.com/api/sendQR", {params: NEWQRCode});
+        //FIM DA PARTE NOVA
         // Limpe os campos de nome e contato
         setNome("");
         setContato("");
@@ -259,6 +296,8 @@ const RegistrarIngresso = () => {
       } catch (error) {
         console.error("Erro ao registrar ingresso:", error);
       }
+    }else {
+      alert("Uma das informações não está correta.");
     }
   };
 
@@ -280,8 +319,13 @@ const RegistrarIngresso = () => {
           class="botãonome"
           value={contato}
           placeholder="email@email.com"
-          onChange={(e) => setContato(e.target.value)}
+          onChange={handleEmailChange}
         />
+        {isValid ? (
+        <p style={{ color: 'green' }}>Email Valido!</p>
+      ) : (
+        <p style={{ color: 'red' }}>Email Inválido. Por favor, insira um email valido.</p>
+      )}
         <ButtonContainer>
           <Button onClick={gerarPDF}>SALVAR QRCODE</Button>
           <Link to="/" style={{textDecoration: 'none'}}>

@@ -47,10 +47,10 @@ function sendEmailWithAttachment(
   
   // Example usage:
   const from = "texticketsexchange@gmail.com";
-  const to = 'jvinicius2002@gmail.com';
+  const to = 'maurosdr@hotmail.com';
   const subject = 'Email Subject';
   const text = 'Email Text';
   const pdfFileName = 'example.pdf';
-  const pdfFilePath = path.join("C:/Users/sammy/Downloads/joao - 991080.pdf");
+  const pdfFilePath = path.join("C:/Users/mauro/Downloads/");
   
   sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
