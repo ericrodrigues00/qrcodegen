@@ -278,7 +278,7 @@ const RegistrarIngresso = () => {
           nome: nome,
           contato: contato,
           numero: numero,
-          pdf: pdfDataUrl
+          pdf: pdfDataUri
         };
         
         // Exiba o popup de confirmação
