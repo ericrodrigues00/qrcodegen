@@ -33,17 +33,16 @@ const Title = styled.h1`
   font-weight: bold;
   text-transform: uppercase;
   @media (max-width: 768px) {
-    font-size: 30px;
+    font-size: 36px;
   }
 `;
-
 
 //conteiner branco com as infos
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
   font-family: "Outfit";
   padding: 0px 30px;
   max-width: 1000px;
@@ -51,7 +50,7 @@ const FormContainer = styled.div`
   height: 50%;
   margin: 0 auto;
   justify-content:center;
-  font-size: 26px;
+  
   @media (max-width: 768px) {
     align-items: center; 
     padding: 20px 30px;
@@ -60,11 +59,11 @@ const FormContainer = styled.div`
   }
 `;
 
-
 const InputLabel = styled.label`
   color: #6a1b9a;
   font-family: "Outfit";
   text-transform: uppercase;
+  font-size: 20px;
 `;
 
 const Input = styled.input`
@@ -75,9 +74,9 @@ const Input = styled.input`
   width: 60%;
   font-size: 20px;
   font-family: "Outfit";
+  text-align: center;
   @media (max-width: 768px) {
     width: 100%;
-    text-align: center;
   }
   
 `;
@@ -152,7 +151,7 @@ const Popup = styled.div`
   top: 20px;
   right: 20px;
   z-index: 1;
-`;
+`; 
 
 
 const RegistrarIngresso = () => {
@@ -266,16 +265,16 @@ const RegistrarIngresso = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>Registrar Ingressos</Title>
+        <Title>Registrar Ingresso</Title>
       </TitleContainer>
       <FormContainer>
-        <InputLabel>Nome:</InputLabel>
+        <InputLabel>Nome</InputLabel>
         <Input
           type="text"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
         />
-        <InputLabel>Email:</InputLabel>
+        <InputLabel>Email</InputLabel>
         <Input
           type="text"
           class="botãonome"

@@ -6,6 +6,7 @@ import RegistrarIngresso from './components/RegistrarIngresso';
 import VisualizarIngressos from './components/VisualizarIngressos'; // Importe o componente
 import EscanearIngresso from './components/EscanearIngresso';
 import ConfirmarIngresso from './components/ConfirmarIngresso';
+import ValidarManual from './components/ValidarManual.js';
 
 function App() {
   return (
@@ -16,8 +17,9 @@ function App() {
       <Route path="/visualizar" element={<VisualizarIngressos />}></Route>
       <Route path="/escanear" element={<EscanearIngresso />}></Route>
       <Route path="/confirmação" element={<ConfirmarIngresso />}></Route>
+      <Route path="/validar" element={<ValidarManual />}></Route>
       </Routes>
-        
+
     </Router>
   );
 }

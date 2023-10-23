@@ -30,10 +30,6 @@ const Title = styled.h1`
   font-size: 46px;
   font-family: "Outfit";
   font-weight: bold;
-  text-transform: uppercase;
-  @media (max-width: 768px) {
-    font-size: 30px;
-  }
 `;
 
 const StyledLink = styled(Link)`
@@ -147,8 +143,6 @@ const Button = styled.button`
 
   @media (max-width: 768px) { 
     font-size: 16px; 
-    height:50px;
-    width:250px;
     &:last-child {
       margin-bottom: 20px;
     }
@@ -196,9 +190,6 @@ const EscanearIngresso = () => {
   const fecharPopup = () => {
     setResultadoScan(null);
     setPopupVisible(false);
-
-    // Recarrega a página automaticamente após fechar o popup
-    window.location.reload();
   };
 
   const verificarIngresso = async (result) => {
@@ -248,7 +239,7 @@ const EscanearIngresso = () => {
     <Container>
       <TitleContainer>
         <Title>
-          <StyledLink to="/">Escanear Ingressos</StyledLink>
+          <StyledLink to="/">PARMEJÓ 2023</StyledLink>
         </Title>
       </TitleContainer>
       <ScannerContainer>
@@ -276,6 +267,9 @@ const EscanearIngresso = () => {
       <ButtonContainer>
           <Link to="/" style={{textDecoration: 'none'}}>
             <Button>VOLTAR PARA A HOME</Button>
+          </Link>
+          <Link to="/validar" style={{ textDecoration: 'none' }}>
+            <Button>VALIDAR MANUALMENTE</Button>
           </Link>
         </ButtonContainer>
     </Container>

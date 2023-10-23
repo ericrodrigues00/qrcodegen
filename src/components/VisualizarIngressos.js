@@ -52,10 +52,9 @@ const Title = styled.h1`
   font-weight: bold;
   text-transform: uppercase;
   @media (max-width: 768px) {
-    font-size: 30px;
+    font-size: 36px;
   }
 `;
-
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
