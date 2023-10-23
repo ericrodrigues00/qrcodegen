@@ -278,12 +278,12 @@ const RegistrarIngresso = () => {
           nome: nome,
           contato: contato,
           numero: numero,
-          pdf: pdfDataUri
+          pdf: pdfDataUrl
         };
         
         // Exiba o popup de confirmação
         setPopupVisible(true);
-        await api.get("https://api-eztickets.onrender.com/api/sendQR", {params: NEWQRCode});
+        await api.get("/api/sendQR", {params: NEWQRCode});
         //FIM DA PARTE NOVA
         // Limpe os campos de nome e contato
         setNome("");
