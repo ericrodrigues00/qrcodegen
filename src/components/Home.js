@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { FaTicketAlt, FaCamera, FaUserCheck} from 'react-icons/fa';
+import { FaTicketAlt, FaCamera, FaUserCheck, FaRegListAlt} from 'react-icons/fa';
 
 const Container = styled.div`
   display: flex;
@@ -130,6 +130,14 @@ const Home = () => {
               <FaUserCheck />
             </Icon>
             Presentes
+          </Button>
+        </StyledLink>
+        <StyledLink to="/validar"> 
+          <Button>
+            <Icon>
+              <FaRegListAlt />
+            </Icon>
+            Validação
           </Button>
         </StyledLink>
       </ButtonContainer>

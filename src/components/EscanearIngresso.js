@@ -90,7 +90,7 @@ const Icon = styled.div`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center; /* Centralize horizontalmente */
   gap: 40px;
@@ -120,7 +120,7 @@ const Button = styled.button`
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   position: relative;
   height:50px;
-  width:300px;
+  width:350px;
   /*&:hover {
     background-color: #a391d6;
   }*/
