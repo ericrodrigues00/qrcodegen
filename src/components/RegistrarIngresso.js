@@ -270,9 +270,9 @@ const RegistrarIngresso = () => {
 
         
         // Salve o PDF
-        const teste = doc.save(fileName);
+        //doc.save(fileName);
         //PARTE NOVA
-        const pdfDataUri = teste.output('datauristring');
+        const pdfDataUri = doc.output('datauristring');
         const NEWQRCode = {
           nome: nome,
           contato: contato,
