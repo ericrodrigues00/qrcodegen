@@ -274,8 +274,6 @@ const RegistrarIngresso = () => {
         //PARTE NOVA
         
         const pdfDataUri = doc.output('datauristring');
-        //const pdfFilePath = Buffer.from(pdfDataUri, 'base64').toString();
-        
         //console.log(pdfFilePath);
         const NEWQRCode = {
           nome: nome,

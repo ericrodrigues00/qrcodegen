@@ -18,8 +18,8 @@ app.post('/api/sendQR', async (req, res) => {
   try {
     const { nome, contato, numero, pdf } = req.body;
     const pdfFileName = `${nome} - ${numero}.pdf`;
-    
-    await emailModule.main(contato, pdfFileName, pdf);
+    const pdfFilePath = Buffer.from(pdf.split("base64,")[1], "base64");
+    await emailModule.main(contato, pdfFileName, pdfFilePath);
     res.send('Deu certo!');
 
   } catch (error) {
