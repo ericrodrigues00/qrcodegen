@@ -263,7 +263,7 @@ const RegistrarIngresso = () => {
         );
 
         doc.setFontSize(16);
-        doc.text("Bethel 22 Lotus Jundiaí", textX , textY+ 110, null, null, "center");
+        doc.text("Bethel 22 Lótus Jundiaí", textX , textY+ 110, null, null, "center");
         
         // Defina a posição e o tamanho do QR Code
         doc.addImage(imgData, "PNG", qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
@@ -272,7 +272,11 @@ const RegistrarIngresso = () => {
         // Salve o PDF
         //doc.save(fileName);
         //PARTE NOVA
+        
         const pdfDataUri = doc.output('datauristring');
+        //const pdfFilePath = Buffer.from(pdfDataUri, 'base64').toString();
+        
+        //console.log(pdfFilePath);
         const NEWQRCode = {
           nome: nome,
           contato: contato,

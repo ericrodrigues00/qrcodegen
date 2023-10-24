@@ -16,11 +16,12 @@ app.use(cors()); // Habilita o CORS
 
 app.post('/api/sendQR', async (req, res) => {
   try {
-    const { nome, contato, numero, pdfDataUri } = req.body;
+    const { nome, contato, numero, pdf } = req.body;
     const pdfFileName = `${nome} - ${numero}.pdf`;
-
-    await emailModule.main(contato, pdfFileName, pdfDataUri);
+    const pdfFilePath = Buffer.from(pdf.split("base64,")[1], "base64");
+    await emailModule.main(contato, pdfFileName, pdfFilePath);
     res.send('Deu certo!');
+
   } catch (error) {
     console.error('Error sending email:', error);
     res.status(500).send('Error sending email');

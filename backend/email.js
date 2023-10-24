@@ -27,10 +27,9 @@ async function main(to, pdfFileName, pdfFilePath) {
         filename: pdfFileName,
         content: pdfFilePath,
         encoding: 'base64',
-      },
+      }      
     ],
   });
-
   console.log("Message sent: %s", info.messageId);
 }
 
