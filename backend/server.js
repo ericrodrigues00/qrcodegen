@@ -53,8 +53,8 @@ app.post('/api/ingressos', async (req, res) => {
 
     res.status(201).json(novoIngresso);
   } catch (error) {
-    console.error('Erro ao registrar ingressos:', error);
-    res.status(500).json({ error: 'Erro ao registrar ingressos' });
+    console.error('Erro ao registrar ingresso:', error);
+    res.status(500).json({ error: 'Erro ao registrar ingresso' });
   }
 });
 
@@ -76,7 +76,7 @@ app.get('/api/ingressos', async (req, res) => {
   });
 
 
-app.get('https://api-eztickets.onrender.com/api/sendQR', (req, res) => {
+app.get('/api/sendQR', (req, res) => {
   // Example usage of sendEmailWithAttachment
   const nome = req.query.nome;
   const numero = req.query.numero;
