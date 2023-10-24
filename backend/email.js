@@ -2,7 +2,7 @@
 const nodemailer = require('nodemailer');
 const path = require('path');
 
-var html_body = 'Seu convite chegou! Esse é seu acesso para nosso Parmejó:<br>Basta nos mostrar esse QrCode na entrada do evento e aproveitar seu domingo com a melhor parmegiana! 😋<br>Caso sua opção seja retirada para a viagem, deverá ser feita durante o evento, no horário das 11:00 às 15:00.<br>Endereço: Rua Dr. Amadeu Sachi, 400<br>Para mais informações nos sigam nas redes sociais 👇<br>Instagram: @bethellotusdejundiai'
+var html_body = 'Seu convite chegou! Esse é seu acesso para nosso ParmeJó:<br>Basta nos mostrar esse QrCode na entrada do evento e aproveitar seu domingo com a melhor parmegiana! 😋<br>Caso sua opção seja retirada para a viagem, deverá ser feita durante o evento, no horário das 11:00 às 15:00.<br><b>Endereço:</b> Rua Dr. Amadeu Sachi, 400<br>Para mais informações nos sigam nas redes sociais 👇<br><b>Instagram:</b> <a href="http://bit.ly/B22_LotusdeJundiai">@bethellotusdejundiai</a>'
 const CreateMailTransporter = () =>{
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -20,7 +20,7 @@ async function main(to, pdfFileName, pdfFilePath) {
   const info = await transporter.sendMail({
     from: "texticketsexchange@gmail.com", // sender address
     to: to, // list of receivers
-    subject: 'Ingressos Parmejó 2023', // Subject line
+    subject: 'Ingressos ParmeJó 2023', // Subject line
     html: html_body, // plain text body
     attachments: [
       {
