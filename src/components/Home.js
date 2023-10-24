@@ -28,6 +28,9 @@ const Title = styled.h1`
   font-size: 46px;
   font-family: "Outfit";
   font-weight: bold;
+  @media (max-width: 768px) {
+    font-size: 36px;
+  }
 `;
 
 const ButtonContainer = styled.div`

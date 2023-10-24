@@ -33,7 +33,7 @@ const Title = styled.h1`
   font-weight: bold;
   text-transform: uppercase;
   @media (max-width: 768px) {
-    font-size: 36px;
+    font-size: 30px;
   }
 `;
 
@@ -82,7 +82,7 @@ const Input = styled.input`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center; /* Centralize horizontalmente */
   gap: 30px;

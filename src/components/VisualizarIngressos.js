@@ -52,7 +52,7 @@ const Title = styled.h1`
   font-weight: bold;
   text-transform: uppercase;
   @media (max-width: 768px) {
-    font-size: 36px;
+    font-size: 30px;
   }
 `;
 const ButtonContainer = styled.div`
@@ -202,6 +202,7 @@ const Input = styled.input`
   font-family: "Outfit";
   @media (max-width: 768px) {
     width: 100%;
+    font-size: 20px;
   }
   
 `;

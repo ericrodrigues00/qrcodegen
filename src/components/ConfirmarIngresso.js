@@ -11,6 +11,9 @@ const ConfirmationPageContainer = styled.div`
 const Title = styled.h1`
   color: #6a1b9a;
   margin-bottom: 20px;
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
 `;
 
 const ConfirmationCard = styled.div`

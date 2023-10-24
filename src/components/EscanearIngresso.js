@@ -30,6 +30,9 @@ const Title = styled.h1`
   font-size: 46px;
   font-family: "Outfit";
   font-weight: bold;
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -43,7 +46,7 @@ const ScannerContainer = styled.div`
   align-items: center;
   background-color: white;
   border-radius: 5px;
-  width: 60%;
+  width: 80%;
   margin: 0 auto;
   padding: 0px 0px 0px 0px;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
@@ -239,7 +242,7 @@ const EscanearIngresso = () => {
     <Container>
       <TitleContainer>
         <Title>
-          <StyledLink to="/">PARMEJÓ 2023</StyledLink>
+          <StyledLink to="/">ESCANEAR INGRESSO</StyledLink>
         </Title>
       </TitleContainer>
       <ScannerContainer>
