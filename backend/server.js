@@ -64,7 +64,7 @@ app.post('/api/ingressos', async (req, res) => {
     
 
     // Salve o ingresso no banco de dados
-    //await novoIngresso.save();
+    await novoIngresso.save();
 
     res.status(201).json(novoIngresso);
   } catch (error) {
