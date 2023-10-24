@@ -19,7 +19,7 @@ app.post('/api/sendQR', async (req, res) => {
     const { nome, contato, numero, pdf } = req.body;
     const pdfFileName = `${nome} - ${numero}.pdf`;
     
-    await emailModule.main(contato, pdfFileName, pdfFilePath);
+    await emailModule.main(contato, pdfFileName, pdf);
     res.send('Deu certo!');
 
   } catch (error) {
