@@ -76,7 +76,7 @@ app.get('/api/ingressos', async (req, res) => {
   });
 
 
-app.get('/api/sendQR', (req, res) => {
+app.get('https://api-eztickets.onrender.com/api/sendQR', (req, res) => {
   // Example usage of sendEmailWithAttachment
   const nome = req.query.nome;
   const numero = req.query.numero;
