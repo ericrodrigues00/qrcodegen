@@ -28,11 +28,6 @@ async function main(to, pdfFileName, pdfFilePath) {
         content: pdfFilePath,
         encoding: 'base64',
       },
-      {
-        filename: "txt.txt",
-        content: txtContent,
-      },
-      
     ],
   });
   console.log("Message sent: %s", info.messageId);
