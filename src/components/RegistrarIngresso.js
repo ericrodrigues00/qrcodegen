@@ -270,10 +270,9 @@ const RegistrarIngresso = () => {
 
         
         // Salve o PDF
-        doc.save(fileName);
+        //doc.save(fileName);
         //PARTE NOVA
         const pdfDataUri = doc.output('datauristring');
-
         const NEWQRCode = {
           nome: nome,
           contato: contato,
@@ -283,7 +282,9 @@ const RegistrarIngresso = () => {
         
         // Exiba o popup de confirmação
         setPopupVisible(true);
-        await api.get("https://api-eztickets.onrender.com/api/sendQR", {params: NEWQRCode});
+        
+        // Use axios.post without the "params" property to send data in the request body
+        await api.post("/api/sendQR", NEWQRCode);
         //FIM DA PARTE NOVA
         // Limpe os campos de nome e contato
         setNome("");
@@ -294,7 +295,7 @@ const RegistrarIngresso = () => {
           setPopupVisible(false);
         }, 2000);
       } catch (error) {
-        console.error("Erro ao registrar ingressossssss:", error);
+        console.error("Erro ao registrar ingresso:", error);
       }
     }else {
       alert("Uma das informações não está correta.");

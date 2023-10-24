@@ -1,56 +1,38 @@
+// emailModule.js
 const nodemailer = require('nodemailer');
-const fs = require('fs');
 const path = require('path');
 
-// Create a Nodemailer transporter
+const CreateMailTransporter = () =>{
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // e.g., 'Gmail', 'Outlook', 'Yahoo', etc.
+  service: 'gmail',
+  port:465,
   auth: {
-    user: "texticketsexchange@gmail.com", // Your email address
-    pass: "oaio wtpw fglm xssn" // Your email password or app-specific password 
-}
-});
-
-// Email data
-function sendEmailWithAttachment(
-    from,
-    to,
-    subject,
-    text,
-    pdfFileName,
-    pdfFilePath
-  ) {
-    // Email data
-    const mailOptions = {
-      from,
-      to,
-      subject,
-      text,
-      attachments: [
-        {
-          filename: pdfFileName,
-          path: pdfFilePath,
-          contentType: 'application/pdf'
-        }
-      ]
-    };
-  
-    // Send the email
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error('Error sending email: ' + error);
-      } else {
-        console.log('Email sent: ' + info.response);
-      }
-    });
+    user: "texticketsexchange@gmail.com",
+    pass: "oaio wtpw fglm xssn"
   }
+});
+  return transporter;
+}
+async function main(to, pdfFileName, pdfFilePath) {
+  const transporter = CreateMailTransporter();
   
-  // Example usage:
-  const from = "texticketsexchange@gmail.com";
-  const to = 'jvinicius2002@gmail.com';
-  const subject = 'Email Subject';
-  const text = 'Email Text';
-  const pdfFileName = 'teste.pdf';
-  const pdfFilePath = path.join("C:/Users/sammy/Downloads/", pdfFileName);
-  
-  sendEmailWithAttachment(from, to, subject, text, pdfFileName, pdfFilePath);
+  const info = await transporter.sendMail({
+    from: "texticketsexchange@gmail.com", // sender address
+    to: to, // list of receivers
+    subject: 'Ingressos Parmejó 2023', // Subject line
+    text: 'Olá, tudo bem? Seu Ingresso para o PARMEJÓ2023 já está disponível!', // plain text body
+    attachments: [
+      {
+        filename: pdfFileName,
+        content: pdfFilePath,
+        encoding: 'base64',
+      },
+    ],
+  });
+
+  console.log("Message sent: %s", info.messageId);
+}
+
+module.exports = {
+  main
+};
