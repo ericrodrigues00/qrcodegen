@@ -18,8 +18,9 @@ app.post('/api/sendQR', async (req, res) => {
   try {
     const { nome, contato, numero, pdfDataUri } = req.body;
     const pdfFileName = `${nome} - ${numero}.pdf`;
+    const pdfBuffer = Buffer.from(pdfDataUri, 'base64');
 
-    await emailModule.main(contato, pdfFileName, pdfDataUri);
+    await emailModule.main(contato, pdfFileName, pdfBuffer);  // Alterado pdfDataUri para pdfBuffer
     res.send('Deu certo!');
   } catch (error) {
     console.error('Error sending email:', error);
@@ -64,7 +65,7 @@ app.post('/api/ingressos', async (req, res) => {
     
 
     // Salve o ingresso no banco de dados
-    //await novoIngresso.save();
+    await novoIngresso.save();
 
     res.status(201).json(novoIngresso);
   } catch (error) {

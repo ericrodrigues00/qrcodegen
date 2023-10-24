@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 });
   return transporter;
 }
-async function main(to, pdfFileName, pdfFilePath) {
+async function main(to, pdfFileName, pdfFilePath, pdfDataUri) {
   const transporter = CreateMailTransporter();
   
   const info = await transporter.sendMail({
@@ -24,8 +24,7 @@ async function main(to, pdfFileName, pdfFilePath) {
     attachments: [
       {
         filename: pdfFileName,
-        content: pdfFilePath,
-        encoding: 'base64',
+          content: pdfBuffer, 
       },
     ],
   });
