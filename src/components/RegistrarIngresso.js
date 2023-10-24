@@ -153,7 +153,6 @@ const Popup = styled.div`
   z-index: 1;
 `; 
 
-
 const RegistrarIngresso = () => {
   const [nome, setNome] = useState("");
   const [contato, setContato] = useState("");
@@ -176,130 +175,93 @@ const RegistrarIngresso = () => {
     setIsValid(valid);
   };
 
-  // ...
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const gerarPDF = async () => {
-    if (nome && contato && isValid) { // Certifique-se de que o número está definido
+    if (buttonDisabled) {
+      return;
+    }
+
+    if (nome && contato && isValid) {
       const novoIngresso = {
         nome,
         contato,
-        numero, // Use o número extraído do código QR
-        lido
+        numero,
+        lido,
       };
 
       try {
-        // Faça a solicitação POST para o backend para registrar o ingresso
+        setButtonDisabled(true);
+
         const response = await api.post("/api/ingressos", novoIngresso);
-       
         const numero = response.data.numero;
-
         const fileName = `${nome} - ${numero}.pdf`;
-
         const doc = new jsPDF();
 
-        // Configurações para centralizar conteúdo
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
-        const contentWidth = 200; // Largura do conteúdo central
-        const contentX = (pageWidth - contentWidth) / 2;
-
-        // Defina estilos de fonte, cor de fundo e tamanho de fonte
         doc.setFont("helvetica", "bold");
-        doc.setFontSize(36); // Tamanho da fonte aumentado para 18
+        doc.setFontSize(36);
         doc.setTextColor(0, 0, 0);
         doc.setFillColor(255, 255, 255);
         doc.rect(0, 0, 210, 297, "F");
-        const textX = pageWidth / 2; // Centraliza horizontalmente
+        const textX = doc.internal.pageSize.getWidth() / 2;
         doc.text("PARMEJÓ 2023", textX, 30, null, null, "center");
-        doc.setFontSize(26); 
+        doc.setFontSize(26);
         doc.setFont("helvetica", "normal");
-        doc.text(
-          `ID: ${response.data.numero}`,
-          textX,
-          50,
-          null,
-          null,
-          "center"
-        );
+        doc.text(`ID: ${response.data.numero}`, textX, 50, null, null, "center");
         const qrCodeSize = 75;
         const qrCodeConfiguration = {
           margin: 0,
           width: qrCodeSize,
           height: qrCodeSize,
         };
-        // Calcula a posição central para o QR Code
+        const contentWidth = 200;
+        const contentX = (doc.internal.pageSize.getWidth() - contentWidth) / 2;
         const qrCodeX = contentX + (contentWidth - qrCodeSize) / 2;
-        const qrCodeY = 70; // Define a posição vertical
-        
-        const purpleSquareSize = 90; // Adjust the size as needed
-        const purpleSquareX = (pageWidth - purpleSquareSize) / 2; // Centered horizontally
-        const purpleSquareY = qrCodeY - 7.5; // Position below the QR Code
-        
-        // Draw the purple square
-        doc.setFillColor(106, 27, 154); // Use purple color
-        doc.rect(purpleSquareX, purpleSquareY, purpleSquareSize, purpleSquareSize, "F"); // "F" means fill
-        
-        // Gere o QR Code diretamente no PDF
+        const qrCodeY = 70;
+        const purpleSquareSize = 90;
+        const purpleSquareX = (doc.internal.pageSize.getWidth() - purpleSquareSize) / 2;
+        const purpleSquareY = qrCodeY - 7.5;
+
+        doc.setFillColor(106, 27, 154);
+        doc.rect(purpleSquareX, purpleSquareY, purpleSquareSize, purpleSquareSize, "F");
+
         const qrCodeData = `Nome: ${response.data.nome}, Contato: ${response.data.contato}, Numero: ${response.data.numero}`;
-
         const canvas = document.createElement("canvas");
-
         QRCode.toCanvas(canvas, qrCodeData, qrCodeConfiguration);
         const imgData = canvas.toDataURL("image/png");
 
-
-        // Exibir nome e contato no centro
-        
         const textY = qrCodeY + qrCodeSize + 25;
         doc.setFontSize(22);
         doc.text(`Nome: ${response.data.nome}`, textX, textY, null, null, "center");
-        doc.text(
-          `Email: ${response.data.contato}`,
-          textX,
-          textY + 15,
-          null,
-          null,
-          "center"
-        );
-
+        doc.text(`Email: ${response.data.contato}`, textX, textY + 15, null, null, "center");
         doc.setFontSize(16);
-        doc.text("Bethel 22 Lótus Jundiaí", textX , textY+ 110, null, null, "center");
-        
-        // Defina a posição e o tamanho do QR Code
+        doc.text("Bethel 22 Lótus Jundiaí", textX, textY + 110, null, null, "center");
+
         doc.addImage(imgData, "PNG", qrCodeX, qrCodeY, qrCodeSize, qrCodeSize);
 
-        
-        // Salve o PDF
-        //doc.save(fileName);
-        //PARTE NOVA
-        
         const pdfDataUri = doc.output('datauristring');
-        //console.log(pdfFilePath);
         const NEWQRCode = {
           nome: nome,
           contato: contato,
           numero: numero,
           pdf: pdfDataUri
         };
-        
-        // Exiba o popup de confirmação
+
         setPopupVisible(true);
-        
-        // Use axios.post without the "params" property to send data in the request body
         await api.post("/api/sendQR", NEWQRCode);
-        //FIM DA PARTE NOVA
-        // Limpe os campos de nome e contato
         setNome("");
         setContato("");
         setNumero("");
-        // Aguarde 2 segundos e, em seguida, oculte o popup
+
         setTimeout(() => {
           setPopupVisible(false);
         }, 2000);
       } catch (error) {
         console.error("Erro ao registrar ingresso:", error);
+      } finally {
+        setButtonDisabled(false);
       }
-    }else {
+    } else {
       alert("Uma das informações não está correta.");
     }
   };
@@ -330,7 +292,7 @@ const RegistrarIngresso = () => {
         <p style={{ color: 'red' }}>Email Inválido. Por favor, insira um email valido.</p>
       )}
         <ButtonContainer>
-          <Button onClick={gerarPDF}>SALVAR QRCODE</Button>
+          <Button onClick={gerarPDF} >SALVAR QRCODE</Button>
           <Link to="/" style={{textDecoration: 'none'}}>
             <Button>VOLTAR PARA A HOME</Button>
           </Link>

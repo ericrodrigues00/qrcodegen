@@ -46,11 +46,10 @@ const ScannerContainer = styled.div`
   align-items: center;
   background-color: white;
   border-radius: 5px;
-  width: 80%;
+  width: 60%;
   margin: 0 auto;
   padding: 0px 0px 0px 0px;
   box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
-  
 `;
 
 const QRScanner = styled(QrScanner)`
