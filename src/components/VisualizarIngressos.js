@@ -198,6 +198,9 @@ const TdCustom = styled.td`
   padding: 5px 100px; /* Estilo personalizado para a coluna específica */
   
 `;
+const LabelWithCustomFontSize = styled.label`
+  font-size: 18px; /* Tamanho da fonte personalizado em pixels */
+`;
 const Input = styled.input`
   padding: 10px;
   border: 0;
@@ -218,6 +221,7 @@ const Input = styled.input`
 const VisualizarIngressos = () => {
   const [ingressos, setIngressos] = useState([]);
   const [filter, setFilter] = useState('');
+  const [showNaoUtilizados, setShowNaoUtilizados] = useState(false);
 
   useEffect(() => {
     // Fetch ingressos from the backend
@@ -234,8 +238,11 @@ const VisualizarIngressos = () => {
   }, []);
 
   const filteredIngressos = ingressos.filter(ingresso => {
-    return ingresso.nome?.toLowerCase().includes(filter.toLowerCase());
+    const nomeIncluiFiltro = ingresso.nome?.toLowerCase().includes(filter.toLowerCase());
+    const exibirIngresso = showNaoUtilizados ? !ingresso.lido : true;
+    return nomeIncluiFiltro && exibirIngresso;
   });
+
 
   return (
     <Container>
@@ -250,6 +257,14 @@ const VisualizarIngressos = () => {
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
         />
+        <LabelWithCustomFontSize>
+          <input
+            type='checkbox'
+            checked={showNaoUtilizados}
+            onChange={() => setShowNaoUtilizados(!showNaoUtilizados)}
+          />
+          Mostrar Não Utilizados
+        </LabelWithCustomFontSize>
         <StyledTable id="myTable">
           <thead>
             <tr>
