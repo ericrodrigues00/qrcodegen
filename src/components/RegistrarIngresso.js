@@ -9,7 +9,7 @@ import QRCode from "qrcode";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   @media (max-width: 768px) {
     align-items: center; 
     height: 100%;
@@ -57,6 +57,11 @@ const FormContainer = styled.div`
     gap: 25px;
     width: auto;
   }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
 `;
 
 const InputLabel = styled.label`
@@ -263,7 +268,7 @@ const RegistrarIngresso = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>Registrar Ingresso</Title>
+        <Title><StyledLink to="/">Registrar Ingresso</StyledLink></Title>
       </TitleContainer>
       <FormContainer>
         <InputLabel>Nome</InputLabel>

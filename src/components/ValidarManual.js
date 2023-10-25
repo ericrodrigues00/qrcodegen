@@ -236,6 +236,12 @@ const Input = styled.input`
   }
   
 `;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
+
 const Popup = styled.div`
   background-color: #6a1b9a;
   color: white;
@@ -323,7 +329,7 @@ const ValidarManual = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>Validar Ingressos</Title>
+        <Title><StyledLink to="/">Validar Ingressos</StyledLink></Title>
       </TitleContainer>
       <FormContainer>
         <Input

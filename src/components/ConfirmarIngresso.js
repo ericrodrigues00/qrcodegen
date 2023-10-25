@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const ConfirmationPageContainer = styled.div`
   text-align: center;
@@ -29,10 +30,15 @@ const ContactInfo = styled.div`
   font-size: 18px;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
+
 const ConfirmarIngresso = ({ nome, contato }) => {
   return (
     <ConfirmationPageContainer>
-      <Title>Confirmação</Title>
+      <Title><StyledLink to="/">Confirmação</StyledLink></Title>
       <ConfirmationCard>
         <h2>O ingresso foi verificado com sucesso!</h2>
         <p>Nome da Pessoa: {nome}</p>

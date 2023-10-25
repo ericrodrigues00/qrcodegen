@@ -8,7 +8,7 @@ import { FaCheck, FaSadCry, FaKissBeam } from 'react-icons/fa';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   @media (max-width: 768px) {
     align-items: center; 
     height: 100%;
@@ -82,6 +82,7 @@ const PopupContent = styled.div`
   font-weight: bold;
   text-transform: uppercase;
   margin: 50px 90px 40px 90px;
+  text-align: center;
 `;
 
 const Icon = styled.div`
@@ -92,7 +93,7 @@ const Icon = styled.div`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center; /* Centralize horizontalmente */
   gap: 40px;

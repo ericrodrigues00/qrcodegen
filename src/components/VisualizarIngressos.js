@@ -55,6 +55,12 @@ const Title = styled.h1`
     font-size: 30px;
   }
 `;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -234,7 +240,7 @@ const VisualizarIngressos = () => {
   return (
     <Container>
       <TitleContainer>
-        <Title>Visualizar Ingressos</Title>
+        <Title><StyledLink to="/">Visualizar Ingressos</StyledLink></Title>
       </TitleContainer>
       <FormContainer>
         <Input
