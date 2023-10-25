@@ -218,13 +218,7 @@ const RegistrarIngresso = () => {
         const contentX = (doc.internal.pageSize.getWidth() - contentWidth) / 2;
         const qrCodeX = contentX + (contentWidth - qrCodeSize) / 2;
         const qrCodeY = 70;
-        const purpleSquareSize = 90;
-        const purpleSquareX = (doc.internal.pageSize.getWidth() - purpleSquareSize) / 2;
-        const purpleSquareY = qrCodeY - 7.5;
-
-        doc.setFillColor(106, 27, 154);
-        doc.rect(purpleSquareX, purpleSquareY, purpleSquareSize, purpleSquareSize, "F");
-
+        
         const qrCodeData = `Nome: ${response.data.nome}, Contato: ${response.data.contato}, Numero: ${response.data.numero}`;
         const canvas = document.createElement("canvas");
         QRCode.toCanvas(canvas, qrCodeData, qrCodeConfiguration);
