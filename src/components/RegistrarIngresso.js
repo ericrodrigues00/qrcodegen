@@ -64,6 +64,39 @@ const StyledLink = styled(Link)`
   color: inherit;
 `;
 
+const Select = styled.select`
+  position: relative;
+  font-family: Arial;
+  //display: none;
+  width: 250px; /* Set the width */
+  height: 40px; /* Set the height */
+  background-color: #6a1b9a;
+  color: #ffffff;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  &.select-arrow-active:after {
+    //border-color: transparent transparent #fff transparent;
+    top: 7px;
+  }
+
+  &.same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    
+    //border-color: #fff transparent transparent transparent;
+  }
+`;
+
+
 const InputLabel = styled.label`
   color: #6a1b9a;
   font-family: "Outfit";
@@ -87,7 +120,7 @@ const Input = styled.input`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center; /* Centralize horizontalmente */
   gap: 30px;
@@ -166,6 +199,7 @@ const RegistrarIngresso = () => {
   const [ingressos, setIngressos] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
   const [isValid, setIsValid] = useState(true);
+  const [tipoIngresso, setTipoIngresso] = useState("Inteira"); // Default to "Inteira"
 
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -192,6 +226,7 @@ const RegistrarIngresso = () => {
         nome,
         contato,
         numero,
+        tipoIngresso,
         lido,
       };
 
@@ -200,7 +235,6 @@ const RegistrarIngresso = () => {
 
         const response = await api.post("/api/ingressos", novoIngresso);
         const numero = response.data.numero;
-        const fileName = `${nome} - ${numero}.pdf`;
         const doc = new jsPDF();
 
         doc.setFont("helvetica", "bold");
@@ -233,6 +267,8 @@ const RegistrarIngresso = () => {
         doc.setFontSize(22);
         doc.text(`Nome: ${response.data.nome}`, textX, textY, null, null, "center");
         doc.text(`Email: ${response.data.contato}`, textX, textY + 15, null, null, "center");
+        //doc.text(`${response.data.tipoIngresso}`, textX, textY + 30, null, null, "center");
+        
         doc.setFontSize(16);
         doc.text("Bethel 22 Lótus Jundiaí", textX, textY + 110, null, null, "center");
 
@@ -290,6 +326,11 @@ const RegistrarIngresso = () => {
       ) : (
         <p style={{ color: 'red' }}>Email Inválido. Por favor, insira um email valido.</p>
       )}
+      <InputLabel>Tipo de Ingresso</InputLabel>
+      <Select value={tipoIngresso} onChange={(e) => setTipoIngresso(e.target.value)}>
+        <option value="Inteira">Inteira</option>
+        <option value="Meia-entrada">Meia-entrada</option>
+      </Select>
         <ButtonContainer>
           <Button onClick={gerarPDF} >SALVAR QRCODE</Button>
           <Link to="/" style={{textDecoration: 'none'}}>

@@ -270,6 +270,7 @@ const VisualizarIngressos = () => {
             <tr>
               <ThCustom>NOME</ThCustom>
               <ThCustom>ID</ThCustom>
+              <ThCustom>INGRESSO</ThCustom>
               <ThCustom>UTILIZADO</ThCustom>
             </tr>
           </thead>
@@ -278,6 +279,7 @@ const VisualizarIngressos = () => {
               <Tr key={ingresso._id}>
                 <TdCustom>{ingresso.nome}</TdCustom>
                 <TdCustom>{ingresso.numero}</TdCustom>
+                <TdCustom>{ingresso.tipoIngresso}</TdCustom>
                 <TdCustom>{ingresso.lido ? 'SIM' : 'NÃO'}</TdCustom>
               </Tr>
             ))}

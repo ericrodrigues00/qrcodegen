@@ -268,12 +268,13 @@ const EscanearIngresso = () => {
         )}
       </ScannerContainer>
       <ButtonContainer>
-          <Link to="/" style={{textDecoration: 'none'}}>
-            <Button>VOLTAR PARA A HOME</Button>
-          </Link>
           <Link to="/validar" style={{ textDecoration: 'none' }}>
             <Button>VALIDAR MANUALMENTE</Button>
           </Link>
+          <Link to="/" style={{textDecoration: 'none'}}>
+            <Button>VOLTAR PARA A HOME</Button>
+          </Link>
+          
         </ButtonContainer>
     </Container>
   );
