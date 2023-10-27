@@ -58,14 +58,14 @@ app.get('/api/verificarIngresso', async (req, res) => {
 // Rota para registrar ingressos
 app.post('/api/ingressos', async (req, res) => {
   try {
-    const { nome, contato, lido } = req.body;
+    const { nome, contato, lido, tipoIngresso} = req.body;
 
     const numeroAleatorio = Math.floor(Math.random() * 1000000)
-    const novoIngresso = new Ingresso({ nome, contato, numero: numeroAleatorio, lido });
+    const novoIngresso = new Ingresso({ nome, contato, numero: numeroAleatorio, lido,  tipoIngresso});
     
 
     // Salve o ingresso no banco de dados
-    //await novoIngresso.save();
+    await novoIngresso.save();
 
     res.status(201).json(novoIngresso);
   } catch (error) {
