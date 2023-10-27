@@ -5,7 +5,7 @@ const ingressoSchema = new mongoose.Schema({
   nome: String,
   contato: String,
   numero: Number,
-  tipoIngreso: String,
+  tipoIngresso: String,
   lido: Boolean
 });
 
