@@ -267,8 +267,10 @@ const RegistrarIngresso = () => {
         doc.setFontSize(22);
         doc.text(`Nome: ${response.data.nome}`, textX, textY, null, null, "center");
         doc.text(`Email: ${response.data.contato}`, textX, textY + 15, null, null, "center");
-        //doc.text(`${response.data.tipoIngresso}`, textX, textY + 30, null, null, "center");
-        
+        if (response.data.tipoIngresso === "Meia-entrada") {
+          doc.text(`${response.data.tipoIngresso}`, textX, textY + 30, null, null, "center");
+        }
+                
         doc.setFontSize(16);
         doc.text("Bethel 22 Lótus Jundiaí", textX, textY + 110, null, null, "center");
 
