@@ -20,7 +20,7 @@ const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Alinhar o texto à esquerda */
-  margin: 20px 20px 60px 60px;
+  margin: 20px 20px 80px 60px;
   @media (max-width: 768px) {
     align-items: center; 
     margin: 0px;
@@ -44,7 +44,7 @@ const FormContainer = styled.div`
   align-items: center;
   gap: 20px;
   font-family: "Outfit";
-  padding: 0px 30px;
+  padding: 20px 30px;
   max-width: 1000px;
   width: 100%;
   height: 50%;
@@ -120,7 +120,7 @@ const Input = styled.input`
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center; /* Centralize horizontalmente */
   gap: 30px;
