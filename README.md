@@ -40,17 +40,16 @@ O site está disponível para ser testado em: [https://qrcodegen-eztickets.verce
 
 - Permite ao usuário validar manualmente ingressos a partir do ID único associado a cada um deles.
 
-## Capturas de Tela 📷
 
 ## Capturas de Tela 📷
 
 <table>
   <tr>
-    <td align="center"><img src="https://imgur.com/Jj42SYI" alt="Ingresso" ></td>
-    <td align="center"><img src="https://imgur.com/W8xgaIU" alt="Escanear Ingresso" ></td>
-    <td align="center"><img src="https://imgur.com/JlJ9wqJ" alt="Visualizar Ingresso" ></td>
-    <td align="center"><img src="https://imgur.com/4URw7Pn" alt="Validar Ingresso" ></td>
-    <td align="center"><img src="https://imgur.com/d3vFrIS" alt="Registrar Ingresso"  ></td>
+    <td align="center"><img src="/screenshots/qrcode exemplo.jfif" alt="Ingresso" ></td>
+    <td align="center"><img src="/screenshots/ingresso valido.jfif" alt="Escanear Ingresso" ></td>
+    <td align="center"><img src="/screenshots/Visualizar.png" alt="Visualizar Ingresso" ></td>
+    <td align="center"><img src="/screenshots/validar.png" alt="Validar Ingresso" ></td>
+    <td align="center"><img src="/screenshots/registrarr.png" alt="Registrar Ingresso"  ></td>
   </tr>
   <tr>
     <td align="center"><em>Exemplo de ingresso</em></td>
@@ -60,7 +59,6 @@ O site está disponível para ser testado em: [https://qrcodegen-eztickets.verce
     <td align="center"><em>Exemplo de registar ingresso</em></td>
   </tr>
 </table>
-
 
 ## Equipe 👨‍💻
 
