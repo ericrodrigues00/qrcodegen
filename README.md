@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# ParmeJó 2023 - Controle de Ingressos 🎫
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Projeto realizado para o evento "ParmeJó 2023" organizado pela unidade da Bethel Church de Jundiaí - SP, com o objetivo de controlar e validar os ingressos emitidos para o evento.
 
-## Available Scripts
+## Tabela de Conteúdos 📋
 
-In the project directory, you can run:
+- [Deploy](#deploy)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Funcionalidades](#funcionalidades)
+- [Capturas de Tela](#capturas-de-tela)
+- [Equipe](#equipe)
 
-### `npm start`
+## Deploy 🚀
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+O site está disponível para ser testado em: [https://qrcodegen-eztickets.vercel.app](https://qrcodegen-eztickets.vercel.app)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tecnologias Utilizadas 💻
 
-### `npm test`
+- MongoDB ![MongoDB](https://img.shields.io/badge/-MongoDB-brightgreen)
+- Express ![Express](https://img.shields.io/badge/-Express-lightgrey)
+- React ![React](https://img.shields.io/badge/-React-blue)
+- Node.js ![Node.js](https://img.shields.io/badge/-Node.js-green)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Funcionalidades ⚙️
 
-### `npm run build`
+### Registrar
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Cadastra novos ingressos no banco de dados, recebendo o nome do titular do ingresso e seu e-mail de contato para gerar o QR code, que é enviado para o email de contato registrado.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Escanear
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Contém um leitor de QR Codes, bem como a lógica responsável pela validação do ingresso lido.
 
-### `npm run eject`
+### Presentes
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Apresenta uma lista de todos os ingressos registrados até o momento.
+- Permite o usuário filtrar o banco de dados por nome ou por ingressos que ainda não foram utilizados.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Validação
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Permite ao usuário validar manualmente ingressos a partir do ID único associado a cada um deles.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Capturas de Tela 📷
 
-## Learn More
+## Capturas de Tela 📷
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<table>
+  <tr>
+    <td align="center"><img src="https://imgur.com/Jj42SYI" alt="Ingresso" ></td>
+    <td align="center"><img src="https://imgur.com/W8xgaIU" alt="Escanear Ingresso" ></td>
+    <td align="center"><img src="https://imgur.com/JlJ9wqJ" alt="Visualizar Ingresso" ></td>
+    <td align="center"><img src="https://imgur.com/4URw7Pn" alt="Validar Ingresso" ></td>
+    <td align="center"><img src="https://imgur.com/d3vFrIS" alt="Registrar Ingresso"  ></td>
+  </tr>
+  <tr>
+    <td align="center"><em>Exemplo de ingresso</em></td>
+    <td align="center"><em>Funcionamento do leitor</em></td>
+    <td align="center"><em>Exemplo da tela visualizar ingressos</em></td>
+    <td align="center"><em>Exemplo da validação</em></td>
+    <td align="center"><em>Exemplo de registar ingresso</em></td>
+  </tr>
+</table>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## Equipe 👨‍💻
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Este projeto foi realizado por:
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Eric Rodrigues de Oliveira ([GitHub](https://github.com/ericrodrigues00))
+- João Vinicius Castro ([GitHub](https://github.com/akastroo))
+- Mauro Sales Dias Ramos ([GitHub](https://github.com/maurosdr))
+- Marco Schweitzer ([GitHub](https://github.com/MarcoSchwepps))
