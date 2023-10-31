@@ -38,7 +38,7 @@ const Container = styled.div`
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Alinhar o texto à esquerda */
+  align-items: flex-start; 
   margin: 20px 20px 60px 60px;
   @media (max-width: 768px) {
     align-items: center; 
@@ -65,7 +65,7 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center; /* Centralize horizontalmente */
+  justify-content: center; 
   gap: 40px;
   margin-top: 10px;
   margin-bottom: 30px;
@@ -115,20 +115,20 @@ const StyledTable = styled.table`
   }
 
   tr:nth-child(odd) {
-    background-color: #ffffff; /* Linhas ímpares são brancas */
+    background-color: #ffffff; 
   }
 
   tr:nth-child(even) {
-    background-color: #f0f0f0; /* Linhas pares são cinzas */
+    background-color: #f0f0f0; 
   }
 
   text-align: center;
 
   th, td {
-    padding: 5px -20%; // Remova o padding horizontal e mantenha o padding vertical
+    padding: 5px -20%; 
   }
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: 10px;
   }
 `;
 
@@ -189,7 +189,7 @@ const Tr = styled.tr`
 `;
 //teste
 const ThCustom = styled.th`
-  padding: 5px 20px; /* Estilo personalizado para a coluna específica */
+  
   background-color: #333;
   color: white;
  `;
