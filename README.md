@@ -16,10 +16,10 @@ O site está disponível para ser testado em: [https://qrcodegen-eztickets.verce
 
 ## Tecnologias Utilizadas 💻
 
-- MongoDB ![MongoDB](https://img.shields.io/badge/-MongoDB-brightgreen)
-- Express ![Express](https://img.shields.io/badge/-Express-lightgrey)
-- React ![React](https://img.shields.io/badge/-React-blue)
-- Node.js ![Node.js](https://img.shields.io/badge/-Node.js-green)
+- MongoDB 
+- Express 
+- React 
+- Node.js 
 
 ## Funcionalidades ⚙️
 
